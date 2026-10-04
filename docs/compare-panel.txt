@@ -1,0 +1,2 @@
+compare-panel: zero differences
+  :root: 61 properties, .dark: 47 properties, @theme inline: 50 declarations
