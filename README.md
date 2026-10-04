@@ -15,3 +15,23 @@ all draw with. Each of those stays in its own repository and takes this package 
   - `dist/tokens.js` + `dist/tokens.d.ts`: the same values for code.
 - The first release reproduces the panel's own `src/panel/panel.css` values exactly: moving them here changes no pixel.
 - `"files"` ships `dist/` alone; `.gitattributes` keeps every checkout LF whatever the machine's `core.autocrlf`.
+
+## Layout
+
+- `tokens/color.json`: the panel's `--background`, `--brand`, ... custom properties, as a `light` and a `dark` map, keyed by
+  their original names, values copied verbatim (never rounded or converted).
+- `tokens/theme.json`: the panel's `@theme inline` block, declarations in source order, values verbatim.
+- `tokens/scale.json`: the measured scale the panel keeps only as raw numbers in its components (type 11 / 12.5 / 13.5 / 15 /
+  17 px, control 28 px, field 30 px, radii 7 / 12 / 999 px), under new `--size-*` / `--radius-*` names that never collide
+  with a name `color.json` or `theme.json` already uses.
+
+## Running it
+
+- `npm run build` (plain Node, no dependencies) writes `dist/tokens.css`, `dist/theme.css`, `dist/tokens.js` and
+  `dist/tokens.d.ts` from `tokens/*.json`.
+- `npm test` (`node --test`) fails if the committed `dist/` has drifted from a fresh build, if a token value isn't a
+  syntactically plausible CSS value, or if a scale token name collides with an existing one.
+- `node scripts/compare-panel.mjs <path to panel.css>` resolves that panel.css's own `:root`/`.dark` scopes and `@theme
+  inline` block (last declaration per property wins, as the cascade would) and diffs them against `dist/`, ignoring only
+  the new scale tokens. It exits non-zero on any difference; see `docs/compare-panel.txt` for the first release's run
+  against `eemh-ronchamp`'s `src/panel/panel.css`.
