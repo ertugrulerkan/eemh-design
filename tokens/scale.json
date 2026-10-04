@@ -1,0 +1,12 @@
+{
+  "--size-text-11": "11px",
+  "--size-text-12-5": "12.5px",
+  "--size-text-13-5": "13.5px",
+  "--size-text-15": "15px",
+  "--size-text-17": "17px",
+  "--size-control": "28px",
+  "--size-field": "30px",
+  "--radius-small": "7px",
+  "--radius-large": "12px",
+  "--radius-full": "999px"
+}
