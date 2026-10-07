@@ -10,7 +10,7 @@ all draw with. Each of those stays in its own repository and takes this package 
 - `tokens/*.json` is the source: colours (day by default, night), type sizes (11 / 12.5 / 13.5 / 15 / 17 px), control 28 px,
   field 30 px, radii 7 / 12 / 999, spacing, shadows, motion. Nothing else is edited by hand.
 - `npm run build` writes what the consumers import, and a test fails when the written files differ from what the source makes:
-  - `dist/tokens.css`: CSS custom properties, day on `:root`, night under `.dark`;
+  - `dist/tokens.css`: CSS custom properties, day on `:root` and `.light`, night under `.dark` (`.light` takes day back on an element inside a night page);
   - `dist/theme.css`: Tailwind 4's `@theme` mapping onto those properties;
   - `dist/tokens.js` + `dist/tokens.d.ts`: the same values for code.
 - The first release reproduces the panel's own `src/panel/panel.css` values exactly: moving them here changes no pixel.
@@ -24,7 +24,7 @@ all draw with. Each of those stays in its own repository and takes this package 
 - `tokens/derived.json` (v0.2.0): the shades the consumers used to mix themselves with `color-mix()` (a stronger border and
   muted text, a fainter text, hover/active overlays, the rail-blue selection, hover, ink and foreground, the weak tint and the
   readable ink of destructive/warning/success, the primary's hover and soft tint), named once here. Each mixes only colour
-  tokens both themes define, and is written into both `:root` and `.dark`, so a `.dark` set on an element below the root mixes
+  tokens both themes define, and is written into both `:root, .light` and `.dark`, so a `.dark` set on an element below the root mixes
   it again from that element's own night values. The mixes are the ones Tuval (faz 4) and Render (faz 3) drew with, verbatim:
   moving a consumer onto them changes no pixel.
 - `tokens/scale.json`: the measured scale the panel keeps only as raw numbers in its components (type 11 / 12.5 / 13.5 / 15 /

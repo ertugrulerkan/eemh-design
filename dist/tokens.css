@@ -1,4 +1,4 @@
-:root {
+:root, .light {
   --font-sans: "Inter", "Inter Fallback", system-ui, sans-serif;
   --font-mono: ui-monospace, "Cascadia Code", Consolas, monospace;
   --radius: 0.625rem;

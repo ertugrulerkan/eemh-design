@@ -121,7 +121,8 @@ function resolveTheme(rules) {
 
 function parseCssBlock(css, selector) {
   const rules = topLevelRules(stripComments(css));
-  const rule = rules.find((r) => r.selector === selector);
+  // dist scopes day to ":root, .light": a rule matches when the selector is one of its comma-separated parts
+  const rule = rules.find((r) => r.selector.split(",").map((part) => part.trim()).includes(selector));
   const result = {};
   if (!rule) return result;
   for (const [name, value] of declarations(rule.body)) result[name] = value;

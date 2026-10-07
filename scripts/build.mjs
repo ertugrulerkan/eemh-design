@@ -17,8 +17,8 @@ mkdirSync(distDir, { recursive: true });
 const color = readJson("color.json");
 const theme = readJson("theme.json");
 const scale = readJson("scale.json");
-// colours mixed from the ones above (hover, ink, weak tints): written into both scopes, so that under a .dark set below the root
-// they are mixed again from that element's own night values instead of inheriting the root's day result
+// colours mixed from the ones above (hover, ink, weak tints): written into both scopes, so that under a .dark (or .light) set below
+// the root they are mixed again from that element's own values instead of inheriting the root's result
 const derived = readJson("derived.json");
 
 function block(selector, props) {
@@ -26,8 +26,9 @@ function block(selector, props) {
   return `${selector} {\n${lines.join("\n")}\n}\n`;
 }
 
+// day is also scoped to .light, so an element can take day back inside a night page (a tool with its own day/night choice)
 const tokensCss =
-  block(":root", { ...color.light, ...scale, ...derived }) + "\n" + block(".dark", { ...color.dark, ...derived });
+  block(":root, .light", { ...color.light, ...scale, ...derived }) + "\n" + block(".dark", { ...color.dark, ...derived });
 writeFileSync(path.join(distDir, "tokens.css"), tokensCss);
 
 const themeCss = block("@theme inline", theme);
