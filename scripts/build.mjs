@@ -17,6 +17,9 @@ mkdirSync(distDir, { recursive: true });
 const color = readJson("color.json");
 const theme = readJson("theme.json");
 const scale = readJson("scale.json");
+// colours mixed from the ones above (hover, ink, weak tints): written into both scopes, so that under a .dark set below the root
+// they are mixed again from that element's own night values instead of inheriting the root's day result
+const derived = readJson("derived.json");
 
 function block(selector, props) {
   const lines = Object.entries(props).map(([name, value]) => `  ${name}: ${value};`);
@@ -24,7 +27,7 @@ function block(selector, props) {
 }
 
 const tokensCss =
-  block(":root", { ...color.light, ...scale }) + "\n" + block(".dark", color.dark);
+  block(":root", { ...color.light, ...scale, ...derived }) + "\n" + block(".dark", { ...color.dark, ...derived });
 writeFileSync(path.join(distDir, "tokens.css"), tokensCss);
 
 const themeCss = block("@theme inline", theme);
@@ -38,6 +41,8 @@ export const dark = ${JSON.stringify(color.dark, null, 2)};
 export const theme = ${JSON.stringify(theme, null, 2)};
 
 export const scale = ${JSON.stringify(scale, null, 2)};
+
+export const derived = ${JSON.stringify(derived, null, 2)};
 `;
 writeFileSync(path.join(distDir, "tokens.js"), tokensJs);
 
@@ -45,6 +50,7 @@ const tokensDts = `export declare const light: Record<string, string>;
 export declare const dark: Record<string, string>;
 export declare const theme: Record<string, string>;
 export declare const scale: Record<string, string>;
+export declare const derived: Record<string, string>;
 `;
 writeFileSync(path.join(distDir, "tokens.d.ts"), tokensDts);
 

@@ -141,9 +141,9 @@ const distRoot = parseCssBlock(distTokensCss, ":root");
 const distDark = parseCssBlock(distTokensCss, ".dark");
 const distTheme = parseCssBlock(distThemeCss, "@theme inline");
 
-// New scale-only properties never claim to reproduce panel.css; ignore them.
+// New scale-only and derived properties never claim to reproduce panel.css; ignore them.
 const scaleNames = new Set(
-  Object.keys(JSON.parse(readFileSync(path.join(root, "tokens", "scale.json"), "utf8")))
+  ["scale.json", "derived.json"].flatMap((name) => Object.keys(JSON.parse(readFileSync(path.join(root, "tokens", name), "utf8"))))
 );
 
 function diffScope(label, panelValues, distValues) {

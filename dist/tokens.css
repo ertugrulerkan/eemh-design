@@ -70,6 +70,25 @@
   --radius-small: 7px;
   --radius-large: 12px;
   --radius-full: 999px;
+  --border-strong: color-mix(in oklch,var(--border) 45%,var(--foreground) 55%);
+  --muted-foreground-strong: color-mix(in oklch,var(--muted-foreground) 80%,var(--foreground) 20%);
+  --faint-foreground: color-mix(in oklab, var(--foreground) 62%, var(--background) 38%);
+  --hover-overlay: color-mix(in oklch,var(--foreground) 8%,transparent);
+  --active-overlay: color-mix(in oklch,var(--foreground) 14%,transparent);
+  --popover-hover: color-mix(in oklch,var(--popover) 80%,var(--foreground) 12%);
+  --primary-hover: color-mix(in oklab, var(--primary) 85%, var(--background) 15%);
+  --primary-soft: color-mix(in srgb, var(--primary) 14%, transparent);
+  --rail-blue-foreground: color-mix(in oklch,black 85%,var(--rail-blue) 15%);
+  --rail-blue-ink: color-mix(in oklch,var(--rail-blue) 55%,var(--foreground) 45%);
+  --rail-blue-hover: color-mix(in oklch,var(--rail-blue) 85%,var(--foreground) 15%);
+  --rail-blue-selected: color-mix(in oklch,var(--rail-blue) 35%,var(--popover) 65%);
+  --rail-blue-selected-border: color-mix(in oklch,var(--rail-blue) 60%,var(--border) 40%);
+  --destructive-weak: color-mix(in oklch,var(--destructive) 22%,var(--popover) 78%);
+  --destructive-ink: color-mix(in oklch,var(--destructive) 55%,var(--foreground) 45%);
+  --warning-weak: color-mix(in oklch,var(--warning) 22%,var(--popover) 78%);
+  --warning-ink: color-mix(in oklch,var(--warning) 55%,var(--foreground) 45%);
+  --success-weak: color-mix(in oklch,var(--success) 22%,var(--popover) 78%);
+  --success-ink: color-mix(in oklch,var(--success) 55%,var(--foreground) 45%);
 }
 
 .dark {
@@ -120,4 +139,23 @@
   --rail-pink: #ec7aab;
   --rail-cyan: #6bd3e0;
   --rail-grey: #9aa2b3;
+  --border-strong: color-mix(in oklch,var(--border) 45%,var(--foreground) 55%);
+  --muted-foreground-strong: color-mix(in oklch,var(--muted-foreground) 80%,var(--foreground) 20%);
+  --faint-foreground: color-mix(in oklab, var(--foreground) 62%, var(--background) 38%);
+  --hover-overlay: color-mix(in oklch,var(--foreground) 8%,transparent);
+  --active-overlay: color-mix(in oklch,var(--foreground) 14%,transparent);
+  --popover-hover: color-mix(in oklch,var(--popover) 80%,var(--foreground) 12%);
+  --primary-hover: color-mix(in oklab, var(--primary) 85%, var(--background) 15%);
+  --primary-soft: color-mix(in srgb, var(--primary) 14%, transparent);
+  --rail-blue-foreground: color-mix(in oklch,black 85%,var(--rail-blue) 15%);
+  --rail-blue-ink: color-mix(in oklch,var(--rail-blue) 55%,var(--foreground) 45%);
+  --rail-blue-hover: color-mix(in oklch,var(--rail-blue) 85%,var(--foreground) 15%);
+  --rail-blue-selected: color-mix(in oklch,var(--rail-blue) 35%,var(--popover) 65%);
+  --rail-blue-selected-border: color-mix(in oklch,var(--rail-blue) 60%,var(--border) 40%);
+  --destructive-weak: color-mix(in oklch,var(--destructive) 22%,var(--popover) 78%);
+  --destructive-ink: color-mix(in oklch,var(--destructive) 55%,var(--foreground) 45%);
+  --warning-weak: color-mix(in oklch,var(--warning) 22%,var(--popover) 78%);
+  --warning-ink: color-mix(in oklch,var(--warning) 55%,var(--foreground) 45%);
+  --success-weak: color-mix(in oklch,var(--success) 22%,var(--popover) 78%);
+  --success-ink: color-mix(in oklch,var(--success) 55%,var(--foreground) 45%);
 }

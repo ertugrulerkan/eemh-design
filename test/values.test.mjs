@@ -15,6 +15,7 @@ function readJson(name) {
 const color = readJson("color.json");
 const theme = readJson("theme.json");
 const scale = readJson("scale.json");
+const derived = readJson("derived.json");
 
 function isBalanced(value) {
   let depth = 0;
@@ -34,6 +35,7 @@ function allValues() {
     ...Object.entries(color.dark).map(([name, value]) => [`color.dark.${name}`, value]),
     ...Object.entries(theme).map(([name, value]) => [`theme.${name}`, value]),
     ...Object.entries(scale).map(([name, value]) => [`scale.${name}`, value]),
+    ...Object.entries(derived).map(([name, value]) => [`derived.${name}`, value]),
   ];
 }
 
@@ -63,5 +65,15 @@ test("scale token names never collide with a colour or theme name", () => {
   ]);
   for (const name of Object.keys(scale)) {
     assert.ok(!existing.has(name), `scale token ${name} collides with an existing colour/theme name`);
+  }
+});
+
+test("derived token names never collide, and mix only colour tokens both themes define", () => {
+  const existing = new Set([...Object.keys(color.light), ...Object.keys(color.dark), ...Object.keys(theme), ...Object.keys(scale)]);
+  for (const [name, value] of Object.entries(derived)) {
+    assert.ok(!existing.has(name), `derived token ${name} collides with an existing name`);
+    assert.match(value, /^color-mix\(/, `${name}: a derived token is a color-mix() of tokens`);
+    for (const [, used] of value.matchAll(/var\((--[a-z0-9-]+)\)/g))
+      assert.ok(used in color.light && used in color.dark, `${name} mixes ${used}, which is not a colour token of both themes`);
   }
 });
