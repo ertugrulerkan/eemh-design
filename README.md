@@ -3,7 +3,7 @@
 The one source of RONCHAMP's design language: the tokens the panel (eemh-ronchamp), Tuval (eemh-tuval) and Render (eemh-render)
 all draw with. Each of those stays in its own repository and takes this package at a release tag, the way the panel takes Tuval:
 
-    "eemh-design": "github:ertugrulerkan/eemh-design#v0.1.0"
+    "eemh-design": "github:ertugrulerkan/eemh-design#<tag>"
 
 ## Contract
 
