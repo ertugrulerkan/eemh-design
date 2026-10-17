@@ -36,8 +36,11 @@ all draw with. Each of those stays in its own repository and takes this package 
 - `npm run build` (plain Node, no dependencies) writes `dist/tokens.css`, `dist/theme.css`, `dist/tokens.js` and
   `dist/tokens.d.ts` from `tokens/*.json`.
 - `npm test` (`node --test`) fails if the committed `dist/` has drifted from a fresh build, if a token value isn't a
-  syntactically plausible CSS value, or if a scale token name collides with an existing one.
+  syntactically plausible CSS value, if a scale token name collides with an existing one, if a night colour has no day
+  value (`.light` could not take it back), if a solid derived mix adds up to less than 100% (it would come out partly
+  transparent), or if a `package.json` export names a file `dist/` does not ship.
 - `node scripts/compare-panel.mjs <path to panel.css>` resolves that panel.css's own `:root`/`.dark` scopes and `@theme
   inline` block (last declaration per property wins, as the cascade would) and diffs them against `dist/`, ignoring only
   the new scale tokens. It exits non-zero on any difference; see `docs/compare-panel.txt` for the first release's run
-  against `eemh-ronchamp`'s `src/panel/panel.css`.
+  against `eemh-ronchamp`'s `src/panel/panel.css`. A panel.css that already imports `eemh-design` (the panel's since v0.2.0)
+  holds no copy to compare, and the script says so with exit 2.
