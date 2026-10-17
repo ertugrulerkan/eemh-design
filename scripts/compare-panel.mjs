@@ -132,6 +132,13 @@ function parseCssBlock(css, selector) {
 const panelCss = readFileSync(panelPath, "utf8");
 const panelRules = topLevelRules(stripComments(panelCss));
 
+// A panel.css that already imports this package's dist/ declares only its own departures: diffing those against dist/ would
+// list every token as a difference, so say why the comparison does not apply instead.
+if (/@import\s+(?:url\(\s*)?["']eemh-design\//.test(stripComments(panelCss))) {
+  console.error(`compare-panel: ${panelPath} imports eemh-design itself; there is no copy of the tokens left to compare`);
+  process.exit(2);
+}
+
 const panelRoot = resolveScope(panelRules, ":root");
 const panelDark = resolveScope(panelRules, ".dark");
 const panelTheme = resolveTheme(panelRules);
