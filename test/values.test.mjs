@@ -77,3 +77,19 @@ test("derived token names never collide, and mix only colour tokens both themes 
       assert.ok(used in color.light && used in color.dark, `${name} mixes ${used}, which is not a colour token of both themes`);
   }
 });
+
+test("every night colour has a day value, so .light inside a .dark page takes each one back", () => {
+  for (const name of Object.keys(color.dark)) assert.ok(name in color.light, `${name} is set for night only`);
+});
+
+// A color-mix() whose two percentages add up to less than 100% comes out partly transparent (CSS Color 5): an overlay says so
+// with `transparent`, a solid shade must add up to 100%. --popover-hover (80% + 12%, 92% opaque) waits on the owner's call.
+const partlyTransparentAsDrawn = new Set(["--popover-hover"]);
+
+test("a derived mix of two colours adds up to 100% unless it mixes with transparent", () => {
+  for (const [name, value] of Object.entries(derived)) {
+    if (value.includes("transparent") || partlyTransparentAsDrawn.has(name)) continue;
+    const shares = [...value.matchAll(/(\d+(?:\.\d+)?)%/g)].map(([, share]) => Number(share));
+    if (shares.length === 2) assert.equal(shares[0] + shares[1], 100, `${name}: ${value} adds up to less than 100%`);
+  }
+});
