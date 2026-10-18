@@ -27,6 +27,10 @@ all draw with. Each of those stays in its own repository and takes this package 
   tokens both themes define, and is written into both `:root, .light` and `.dark`, so a `.dark` set on an element below the root mixes
   it again from that element's own night values. The mixes are the ones Tuval (faz 4) and Render (faz 3) drew with, verbatim:
   moving a consumer onto them changes no pixel.
+- `tokens/keyframes.css` (v0.2.2): the `@keyframes` the `--animate-*` tokens of theme.json name, written into `dist/theme.css`'s
+  `@theme` block, so an animation a consumer uses runs without the panel's own copy. In v0.2.2 `--popover-hover` mixes 88% + 12%
+  (it was 80% + 12%, 92% opaque, its backdrop showing through) and the day `--sidebar-foreground` is the sidebar's light ink, as
+  the day sidebar is drawn dark.
 - `tokens/scale.json`: the measured scale the panel keeps only as raw numbers in its components (type 11 / 12.5 / 13.5 / 15 /
   17 px, control 28 px, field 30 px, radii 7 / 12 / 999 px), under new `--size-*` / `--radius-*` names that never collide
   with a name `color.json` or `theme.json` already uses.
