@@ -1,5 +1,5 @@
 {
-  "about": "Text on a surface as the consumers draw it, each checked in both themes (test/contrast.test.mjs, scripts/contrast.mjs): a name is a token without its --, a /N or /[0.0N] its Tailwind alpha over the page's --background. text: WCAG 2 at 4.5 : 1 (ui-rules A5). misuse: pairs a consumer must not draw, each under 4.5 : 1 in a theme (the 839 failures of 04.10 and the day theme's own of 20.10): the gate has to fail on them.",
+  "about": "Text on a surface as the consumers draw it, each checked in both themes (test/contrast.test.mjs, scripts/contrast.mjs): a name is a token without its --, a /N or /[0.0N] its Tailwind alpha over the page's --background. text: WCAG 2 at 4.5 : 1 (ui-rules A5). misuse: pairs a consumer must not draw, each under 4.5 : 1 in a theme (the 839 failures of 04.10 and the day theme's own of 20.10): the gate has to fail on them. marks: what draws a thing's edge rather than words, WCAG 2 at 3 : 1 against the ground it stands on (1.4.11).",
   "text": [
     ["foreground", "background", "the panel's page"],
     ["foreground", "card", "cards"],
@@ -72,5 +72,9 @@
     ["brand", "card", "20.10: brand words on a day card"],
     ["warning", "background", "20.10: warning words on the day page"],
     ["success", "background", "20.10: success words on the day page"]
+  ],
+  "marks": [
+    ["muted-foreground", "background", "Tuval's layer swatch ring: a colour of AutoCAD's own (yellow, cyan) kept as it is, its edge seen"],
+    ["muted-foreground", "popover", "the layer swatch ring in the layer menu"]
   ]
 }

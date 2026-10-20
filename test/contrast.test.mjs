@@ -62,7 +62,7 @@ for (const theme of THEMES) {
 
 test("the gate covers at least 40 text pairs, every token of them defined", () => {
   assert.ok(pairs.text.length >= 40, `${pairs.text.length} pairs`);
-  for (const [fg, bg] of [...pairs.text, ...pairs.misuse]) for (const theme of THEMES) assert.doesNotThrow(() => contrast([fg, bg], theme), `${fg} on ${bg}`);
+  for (const [fg, bg] of [...pairs.text, ...pairs.misuse, ...pairs.marks]) for (const theme of THEMES) assert.doesNotThrow(() => contrast([fg, bg], theme), `${fg} on ${bg}`);
 });
 
 for (const theme of THEMES) {
@@ -71,6 +71,22 @@ for (const theme of THEMES) {
     assert.deepEqual(failing.map(([[fg, bg, where], r]) => `${fg} on ${bg} (${where}): ${r.toFixed(2)}`), []);
   });
 }
+
+// A mark is an edge, not words (WCAG 1.4.11): Tuval's layer swatch keeps the drawing's own colour, AutoCAD's yellow at 1.07 : 1 on
+// white among them, so its ring is what is seen against the ground, on the themes' pages and on the grounds AutoCAD's colours
+// are read against (white and #1a1a1a: 13c D3).
+for (const theme of THEMES) {
+  test(`every mark stands at 3 : 1 against its ground by ${theme === "light" ? "day" : "night"}`, () => {
+    const failing = pairs.marks.map((p) => [p, contrast(p, theme)]).filter(([, r]) => r < 3);
+    assert.deepEqual(failing.map(([[fg, bg, where], r]) => `${fg} on ${bg} (${where}): ${r.toFixed(2)}`), []);
+  });
+}
+
+test("the swatch ring stands at 3 : 1 on white by day and on #1a1a1a by night", () => {
+  const ring = (theme, ground) => ratio(resolve("var(--muted-foreground)", declarations(theme)), resolve(ground, declarations(theme)));
+  assert.ok(ring("light", "#fff") >= 3, `day ${ring("light", "#fff").toFixed(2)}`);
+  assert.ok(ring("dark", "#1a1a1a") >= 3, `night ${ring("dark", "#1a1a1a").toFixed(2)}`);
+});
 
 test("every pair a consumer must not draw falls under 4.5 : 1 in a theme: the gate fails on them", () => {
   const passing = pairs.misuse.filter((p) => THEMES.every((theme) => contrast(p, theme) >= 4.5));
