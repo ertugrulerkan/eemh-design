@@ -1,0 +1,68 @@
+import { useEffect, useState } from "react";
+// Shared motion tokens (the panel's and Render's src/.../lib/ease.ts until v0.3.0, 12e): the easing curves the components
+// move with, and the springs, the canonical physics used across them.
+// Strong custom variants — defaults like `ease-in`/`ease-out` feel weak.
+export const EASE_OUT = [0.16, 1, 0.3, 1];
+export const EASE_IN_OUT = [0.77, 0, 0.175, 1];
+export const EASE_DRAWER = [0.32, 0.72, 0, 1];
+/** CSS string form of EASE_OUT for inline style transitions. */
+export const EASE_OUT_CSS = "cubic-bezier(0.16, 1, 0.3, 1)";
+/** Press feedback on buttons and other tappable surfaces. */
+export const SPRING_PRESS = {
+    type: "spring",
+    stiffness: 500,
+    damping: 30,
+    mass: 0.6,
+};
+/** Content swaps — label/icon slots trading places inside a control. */
+export const SPRING_SWAP = {
+    type: "spring",
+    stiffness: 460,
+    damping: 30,
+    mass: 0.55,
+};
+/** Overlay panel entrances — modals and sheets summoned by pointer. */
+export const SPRING_PANEL = {
+    type: "spring",
+    stiffness: 420,
+    damping: 40,
+    mass: 0.5,
+};
+/** Shared-layout glides — pills, indicators and panels morphing between positions. */
+export const SPRING_LAYOUT = {
+    type: "spring",
+    stiffness: 360,
+    damping: 32,
+    mass: 0.6,
+};
+/** Cursor-follow physics for decorative mouse tracking (magnetic, tilt, dock). */
+export const SPRING_MOUSE = {
+    stiffness: 200,
+    damping: 15,
+    mass: 0.3,
+};
+/** Dragged handles and fills (sliders) — critically damped `useSpring` config,
+ * so the value follows the pointer butterily and never rebounds off an end. */
+export const SPRING_GLIDE = {
+    stiffness: 700,
+    damping: 50,
+    mass: 0.5,
+};
+/**
+ * Returns true only on devices that have a true hover (mouse / trackpad).
+ * Touch devices fire phantom `:hover` on tap that sticks until tap-elsewhere
+ * — gate hover-only effects (scale lifts, magnetic pulls) behind this.
+ */
+export function useHoverCapable() {
+    const [canHover, setCanHover] = useState(false);
+    useEffect(() => {
+        if (typeof window === "undefined" || !window.matchMedia)
+            return;
+        const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+        const update = () => setCanHover(mq.matches);
+        update();
+        mq.addEventListener?.("change", update);
+        return () => mq.removeEventListener?.("change", update);
+    }, []);
+    return canHover;
+}

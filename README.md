@@ -8,7 +8,8 @@ all draw with. Each of those stays in its own repository and takes this package 
 ## Contract
 
 - `tokens/*.json` is the source: colours (day by default, night), type sizes (11 / 12.5 / 13.5 / 15 / 17 px), control 28 px,
-  field 30 px, radii 7 / 12 / 999, spacing, shadows, motion. Nothing else is edited by hand.
+  field 30 px, radii 7 / 12 / 999, spacing, shadows, motion; `src/` is the source of the code (v0.3.0). Nothing else is edited
+  by hand.
 - `npm run build` writes what the consumers import, and a test fails when the written files differ from what the source makes:
   - `dist/tokens.css`: CSS custom properties, day on `:root` and `.light`, night under `.dark` (`.light` takes day back on an element inside a night page);
   - `dist/theme.css`: Tailwind 4's `@theme` mapping onto those properties;
@@ -31,15 +32,28 @@ all draw with. Each of those stays in its own repository and takes this package 
   `@theme` block, so an animation a consumer uses runs without the panel's own copy. In v0.2.2 `--popover-hover` mixes 88% + 12%
   (it was 80% + 12%, 92% opaque, its backdrop showing through) and the day `--sidebar-foreground` is the sidebar's light ink, as
   the day sidebar is drawn dark.
+- `src/` (v0.3.0, 12e): the code the consumers kept a copy of each, moved here so it has one owner, compiled to `dist/` with its
+  types:
+  - `eemh-design/button`: the panel's button (`Button`, `STILL`): beUI's moving button sized to the measurement standard, a
+    control 28 high with its name on one line, `size="tile"` for a button as high as it holds with its words wrapping, still
+    under the pointer; beUI's own `ButtonLink` beside it. `src/button/base.tsx` is beUI's component as the panel took it.
+  - `eemh-design/motion`: the easing curves and springs the components move with, and `useHoverCapable`.
+  - `eemh-design/cn`: `cn`, class names joined with a later Tailwind utility winning over an earlier one of its kind.
+
+  They need `react`, `motion`, `clsx` and `tailwind-merge` from the consumer (peer dependencies). Tailwind does not read
+  `node_modules`, so a consumer names the package's code as a source in its stylesheet, or the button's classes are never
+  written: `@source "<path to>/node_modules/eemh-design/dist";`.
 - `tokens/scale.json`: the measured scale the panel keeps only as raw numbers in its components (type 11 / 12.5 / 13.5 / 15 /
   17 px, control 28 px, field 30 px, radii 7 / 12 / 999 px), under new `--size-*` / `--radius-*` names that never collide
   with a name `color.json` or `theme.json` already uses.
 
 ## Running it
 
-- `npm run build` (plain Node, no dependencies) writes `dist/tokens.css`, `dist/theme.css`, `dist/tokens.js` and
-  `dist/tokens.d.ts` from `tokens/*.json`.
-- `npm test` (`node --test`) fails if the committed `dist/` has drifted from a fresh build, if a token value isn't a
+- `npm run build` writes `dist/tokens.css`, `dist/theme.css`, `dist/tokens.js` and `dist/tokens.d.ts` from `tokens/*.json`
+  (plain Node), then compiles `src/` into `dist/` with TypeScript (`npm install` first: the compiler and the peers are
+  development dependencies; a consumer installing the package from its tag gets the committed `dist/` and none of them).
+- `npm test` (`node --test`) fails if the committed `dist/` has drifted from a fresh build or a fresh compile of `src/`, if the
+  button's sizes, tile, destructive variant or link draw otherwise than above, if a token value isn't a
   syntactically plausible CSS value, if a scale token name collides with an existing one, if a night colour has no day
   value (`.light` could not take it back), if a solid derived mix adds up to less than 100% (it would come out partly
   transparent), or if a `package.json` export names a file `dist/` does not ship.

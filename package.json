@@ -1,6 +1,6 @@
 {
   "name": "eemh-design",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "files": [
@@ -12,10 +12,37 @@
       "default": "./dist/tokens.js"
     },
     "./tokens.css": "./dist/tokens.css",
-    "./theme.css": "./dist/theme.css"
+    "./theme.css": "./dist/theme.css",
+    "./button": {
+      "types": "./dist/button/index.d.ts",
+      "default": "./dist/button/index.js"
+    },
+    "./motion": {
+      "types": "./dist/motion.d.ts",
+      "default": "./dist/motion.js"
+    },
+    "./cn": {
+      "types": "./dist/cn.d.ts",
+      "default": "./dist/cn.js"
+    }
   },
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build": "node scripts/build.mjs && tsc -p tsconfig.json",
     "test": "node --test"
+  },
+  "peerDependencies": {
+    "clsx": "^2.1.1",
+    "motion": "^13.4.0",
+    "react": "^19.3.0",
+    "tailwind-merge": "^3.7.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "clsx": "2.1.1",
+    "motion": "13.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "tailwind-merge": "3.7.0",
+    "typescript": "7.0.2"
   }
 }
