@@ -47,6 +47,13 @@ all draw with. Each of those stays in its own repository and takes this package 
   written: `@source "<path to>/node_modules/eemh-design/dist/button";` (the folder holds the code alone, so
   the tokens' names in `dist/` do not count as used, and the compiled code carries no comments, whose words Tailwind would
   read as classes).
+- `src/vite/` (v0.4.0, 13b-P2b): the fix for motion-dom's keyboard press, which the button presses through, kept with it: the file
+  `dist/es/gestures/press/utils/keyboard.mjs` (the same from 13.3.0 to 14.4.0) leaves the keyup and blur listeners of every Enter
+  press on the element, so the next blur, long after the press ended, fires a pointercancel that cancels a mouse press under way
+  on another button (ronchamp #89). `eemh-design/vite` exports `pressKeyboard()`, a Vite and Rolldown plugin serving
+  `KEYBOARD_PRESS` (each press owns its two listeners and ends once; each focus owns its keydown listener until its blur) in that
+  file's place, held to its sha256 (`MOTION_KEYBOARD_SHA256`): a motion-dom that changes the file stops the build. A consumer
+  that builds with motion puts it in `plugins` and in `optimizeDeps.rolldownOptions.plugins`.
 - `tokens/scale.json`: the measured scale the panel keeps only as raw numbers in its components (type 11 / 12.5 / 13.5 / 15 /
   17 px, control 28 px, field 30 px, radii 7 / 12 / 999 px), under new `--size-*` / `--radius-*` names that never collide
   with a name `color.json` or `theme.json` already uses.
@@ -56,7 +63,8 @@ all draw with. Each of those stays in its own repository and takes this package 
 - `npm run build` writes `dist/tokens.css`, `dist/theme.css`, `dist/tokens.js` and `dist/tokens.d.ts` from `tokens/*.json`
   (plain Node), then compiles `src/` into `dist/` with TypeScript (`npm install` first: the compiler and the peers are
   development dependencies; a consumer installing the package from its tag gets the committed `dist/` and none of them).
-- `npm test` (`node --test`) fails if the committed `dist/` has drifted from a fresh build or a fresh compile of `src/`, if the
+- `npm test` (`node --test`) fails if the committed `dist/` has drifted from a fresh build or a fresh compile of `src/`, if the served keyboard press leaks a listener or
+  the plugin serves it for another file or past a changed one, if the
   button's sizes, tile, destructive variant or link draw otherwise than above, if a token value isn't a
   syntactically plausible CSS value, if a scale token name collides with an existing one, if a night colour has no day
   value (`.light` could not take it back), if a solid derived mix adds up to less than 100% (it would come out partly

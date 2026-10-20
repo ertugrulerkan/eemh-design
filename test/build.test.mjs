@@ -30,7 +30,7 @@ test("dist/'s code matches a fresh compile of src/", () => {
   const work = mkdtempSync(path.join(tmpdir(), "eemh-design-tsc-"));
   try {
     execFileSync(process.execPath, [path.join(root, "node_modules", "typescript", "bin", "tsc"), "-p", path.join(root, "tsconfig.json"), "--outDir", work]);
-    for (const name of ["button/index", "button/registry/motion/button/base", "button/registry/lib/ease", "button/registry/lib/utils", "button/registry/lib/hooks/use-hover-capable"]
+    for (const name of ["button/index", "button/registry/motion/button/base", "button/registry/lib/ease", "button/registry/lib/utils", "button/registry/lib/hooks/use-hover-capable", "vite/index"]
       .flatMap((file) => [`${file}.js`, `${file}.d.ts`])) {
       const committed = readFileSync(path.join(root, "dist", name), "utf8");
       const fresh = readFileSync(path.join(work, name), "utf8");
