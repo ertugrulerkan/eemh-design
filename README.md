@@ -54,6 +54,15 @@ all draw with. Each of those stays in its own repository and takes this package 
   `KEYBOARD_PRESS` (each press owns its two listeners and ends once; each focus owns its keydown listener until its blur) in that
   file's place, held to its sha256 (`MOTION_KEYBOARD_SHA256`): a motion-dom that changes the file stops the build. A consumer
   that builds with motion puts it in `plugins` and in `optimizeDeps.rolldownOptions.plugins`.
+- `tokens/pairs.json` and `scripts/contrast.mjs` (v0.5.0, 13b-D1): the contrast gate. The 839 contrast failures of 04.10
+  (Tuval's accent as text, white on the accent) were found only in a consumer; the day theme's own of 20.10 (error, done and
+  brand text on their own tints, chip text on a muted ground, 2.7 to 4.4 : 1) not at all. `pairs.json` lists the text pairs the
+  consumers draw (the panel's own class combinations and Tuval's and Render's chrome, 50) and the pairs they must not
+  (`misuse`, 12); `scripts/contrast.mjs` reads the tokens as a browser shows them (`oklch()`, `#hex`, `rgb()`, `color-mix()` in
+  oklch, oklab and srgb, `var()`, a Tailwind alpha over the page) per theme, with WCAG 2 contrast. v0.5.0 also names the
+  readable inks as Tailwind colours (`text-destructive-ink`, `-success-ink`, `-warning-ink`, `-brand-ink`,
+  `text-muted-foreground-strong`), adds `--brand-ink` (the brand pulled 45% toward the foreground, as the others) and gives
+  the night `--brand`, the day's value it already inherited, so a mix of it is a mix of colours both themes define.
 - `tokens/scale.json`: the measured scale the panel keeps only as raw numbers in its components (type 11 / 12.5 / 13.5 / 15 /
   17 px, control 28 px, field 30 px, radii 7 / 12 / 999 px), under new `--size-*` / `--radius-*` names that never collide
   with a name `color.json` or `theme.json` already uses.
@@ -68,7 +77,8 @@ all draw with. Each of those stays in its own repository and takes this package 
   button's sizes, tile, destructive variant or link draw otherwise than above, if a token value isn't a
   syntactically plausible CSS value, if a scale token name collides with an existing one, if a night colour has no day
   value (`.light` could not take it back), if a solid derived mix adds up to less than 100% (it would come out partly
-  transparent), or if a `package.json` export names a file `dist/` does not ship.
+  transparent), if a `package.json` export names a file `dist/` does not ship, if a text pair of `tokens/pairs.json` reads under
+  4.5 : 1 in either theme (ui-rules A5), or if a pair it calls a misuse does not.
 - `node scripts/compare-panel.mjs <path to panel.css>` resolves that panel.css's own `:root`/`.dark` scopes and `@theme
   inline` block (last declaration per property wins, as the cascade would) and diffs them against `dist/`, ignoring only
   the new scale tokens. It exits non-zero on any difference; see `docs/compare-panel.txt` for the first release's run

@@ -17,5 +17,6 @@
   "--warning-weak": "color-mix(in oklch,var(--warning) 22%,var(--popover) 78%)",
   "--warning-ink": "color-mix(in oklch,var(--warning) 55%,var(--foreground) 45%)",
   "--success-weak": "color-mix(in oklch,var(--success) 22%,var(--popover) 78%)",
-  "--success-ink": "color-mix(in oklch,var(--success) 55%,var(--foreground) 45%)"
+  "--success-ink": "color-mix(in oklch,var(--success) 55%,var(--foreground) 45%)",
+  "--brand-ink": "color-mix(in oklch,var(--brand) 55%,var(--foreground) 45%)"
 }

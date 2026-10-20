@@ -89,6 +89,7 @@
   --warning-ink: color-mix(in oklch,var(--warning) 55%,var(--foreground) 45%);
   --success-weak: color-mix(in oklch,var(--success) 22%,var(--popover) 78%);
   --success-ink: color-mix(in oklch,var(--success) 55%,var(--foreground) 45%);
+  --brand-ink: color-mix(in oklch,var(--brand) 55%,var(--foreground) 45%);
 }
 
 .dark {
@@ -109,6 +110,7 @@
   --destructive: oklch(0.704 0.191 22.216);
   --success: oklch(0.72 0.19 149);
   --warning: oklch(0.828 0.189 84.429);
+  --brand: #ff4c00;
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
@@ -158,4 +160,5 @@
   --warning-ink: color-mix(in oklch,var(--warning) 55%,var(--foreground) 45%);
   --success-weak: color-mix(in oklch,var(--success) 22%,var(--popover) 78%);
   --success-ink: color-mix(in oklch,var(--success) 55%,var(--foreground) 45%);
+  --brand-ink: color-mix(in oklch,var(--brand) 55%,var(--foreground) 45%);
 }
