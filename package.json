@@ -14,8 +14,8 @@
     "./tokens.css": "./dist/tokens.css",
     "./theme.css": "./dist/theme.css",
     "./button": {
-      "types": "./dist/button.d.ts",
-      "default": "./dist/button.js"
+      "types": "./dist/button/index.d.ts",
+      "default": "./dist/button/index.js"
     }
   },
   "scripts": {

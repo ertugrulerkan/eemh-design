@@ -33,18 +33,19 @@ all draw with. Each of those stays in its own repository and takes this package 
   (it was 80% + 12%, 92% opaque, its backdrop showing through) and the day `--sidebar-foreground` is the sidebar's light ink, as
   the day sidebar is drawn dark.
 - `src/` (v0.3.0, 12e): the panel's button, which the panel (eemh-ronchamp) and Render (eemh-render) each kept a copy of, moved
-  here so it has one owner, compiled to `dist/` with its types and exported as `eemh-design/button`:
-  - `src/button.tsx`: `Button` and `STILL`. beUI's moving button sized to the measurement standard, a control 28 high with its
+  here so it has one owner, compiled to `dist/button/` with its types and exported as `eemh-design/button`:
+  - `src/button/index.tsx`: `Button` and `STILL`. beUI's moving button sized to the measurement standard, a control 28 high with its
     name on one line, `size="tile"` for a button as high as it holds with its words wrapping, still under the pointer; beUI's
     own `ButtonLink` beside it.
-  - `src/registry/`: what it is built on, as its registries ship it (beUI's `motion/button/base`, its `lib/ease` and
+  - `src/button/registry/`: what it is built on, as its registries ship it (beUI's `motion/button/base`, its `lib/ease` and
     `lib/hooks/use-hover-capable`, shadcn's `lib/utils`), byte for byte but for the import paths, which are relative here. They
     are synced as the panel syncs its own (ui-rules K2: fetch the item's JSON, compare `files[].content`), never edited. The
     consumers keep their own copies of the `lib` files, which their other registry components import by path.
 
   It needs `react`, `motion`, `clsx` and `tailwind-merge` from the consumer (peer dependencies). Tailwind does not read
   `node_modules`, so a consumer names the package's code as a source in its stylesheet, or the button's classes are never
-  written: `@source "<path to>/node_modules/eemh-design/dist";`.
+  written: `@source "<path to>/node_modules/eemh-design/dist/button";` (the folder holds the code alone, so
+  the tokens' names in `dist/` do not count as used).
 - `tokens/scale.json`: the measured scale the panel keeps only as raw numbers in its components (type 11 / 12.5 / 13.5 / 15 /
   17 px, control 28 px, field 30 px, radii 7 / 12 / 999 px), under new `--size-*` / `--radius-*` names that never collide
   with a name `color.json` or `theme.json` already uses.
