@@ -1,6 +1,5 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-// beui.dev/components/motion/button
 import { AnimatePresence, motion, useReducedMotion, } from "motion/react";
 import { forwardRef, useCallback, useRef, useState, } from "react";
 import { EASE_OUT, SPRING_PRESS } from "../../lib/ease.js";
