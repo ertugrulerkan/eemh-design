@@ -78,7 +78,11 @@ export function resolve(value, decl, seen = new Set()) {
     const [channels, alpha] = args.includes("/") ? args.split("/").map((p) => p.trim()) : [args, "1"];
     const c = channels.split(/[\s,]+/).filter(Boolean);
     const a = number(alpha);
-    if (fn === "oklch") return [...oklabToLinear(fromLch([number(c[0]), number(c[1], 0.4), parseFloat(c[2])])), a];
+    // the hue written in oklch() stays the colour's own, a powerless one too (oklch(0.145 0 0) mixes in oklch with hue 0); none is missing
+    if (fn === "oklch") {
+      const hue = c[2] === "none" ? null : parseFloat(c[2]);
+      return Object.assign([...oklabToLinear(fromLch([number(c[0]), number(c[1], 0.4), hue ?? 0])), a], { hue });
+    }
     return [...c.slice(0, 3).map((x) => srgbToLinear(number(x, 255) / 255)), c.length > 3 ? number(c[3]) : a];
   }
   if (fn === "color-mix") return mix(args, decl, seen);
@@ -103,10 +107,13 @@ function mix(args, decl, seen) {
   const alpha = a[3] * w1 + b[3] * w2;
   const coords = (c) => (where === "srgb" ? c.slice(0, 3).map(linearToSrgb) : where === "oklab" ? linearToOklab(c) : toLch(linearToOklab(c)));
   let [ca, cb] = [coords(a), coords(b)];
-  // a transparent side has no hue: it takes the other's (CSS Color 4, missing components)
+  // a side's hue is the one its oklch() wrote, even at chroma 0, as browsers mix it (Chromium 141: oklch(0.6 0.15 250) and
+  // oklch(0.145 0 0) half and half come out at hue 305); a colour converted from another space has none when it is achromatic,
+  // transparent and black among them, and a missing hue takes the other side's (CSS Color 4, missing components)
+  const hues = where === "oklch" ? [[a, ca], [b, cb]].map(([c, lch]) => ("hue" in c ? c.hue : c[3] === 0 || lch[1] < 1e-6 ? null : lch[2])) : [];
   if (where === "oklch") {
-    if (a[3] === 0 || ca[1] < 1e-6) ca[2] = cb[2];
-    if (b[3] === 0 || cb[1] < 1e-6) cb[2] = ca[2];
+    ca[2] = hues[0] ?? hues[1] ?? 0;
+    cb[2] = hues[1] ?? hues[0] ?? 0;
   }
   const out = [0, 1, 2].map((i) => {
     if (where === "oklch" && i === 2) {
@@ -118,7 +125,15 @@ function mix(args, decl, seen) {
     return alpha === 0 ? 0 : (ca[i] * a[3] * w1 + cb[i] * b[3] * w2) / alpha;
   });
   const linear = where === "srgb" ? out.map(srgbToLinear) : where === "oklab" ? oklabToLinear(out) : oklabToLinear(fromLch(out));
-  return [...linear, alpha * Math.min(1, sum)];
+  const mixed = [...linear, alpha * Math.min(1, sum)];
+  // a mix in oklch is an oklch colour: its hue is its own when it is mixed again
+  return where === "oklch" ? Object.assign(mixed, { hue: hues[0] === null && hues[1] === null ? null : out[2] }) : mixed;
+}
+
+/** A colour's oklch lightness, chroma and hue, the hue its oklch() wrote when it was written so. */
+export function oklch(colour) {
+  const lch = toLch(linearToOklab(colour));
+  return colour.hue == null ? lch : [lch[0], lch[1], colour.hue];
 }
 
 // ---- what a screen shows, and contrast

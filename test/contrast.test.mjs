@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { declarations, ratio, resolve, shown } from "../scripts/contrast.mjs";
+import { declarations, oklch, ratio, resolve, shown } from "../scripts/contrast.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const pairs = JSON.parse(readFileSync(path.join(root, "tokens", "pairs.json"), "utf8"));
@@ -31,6 +31,34 @@ test("the colours are read as a browser shows them", () => {
   const overlay = resolve("var(--hover-overlay)", day);
   assert.ok(Math.abs(overlay[3] - 0.08) < 1e-9);
 });
+
+test("a hue written in oklch() mixes as the browser mixes it, a neutral's 0 too", () => {
+  const day = declarations("light");
+  const same = (a, b) => a.every((x, i) => Math.abs(x - b[i]) < 1e-4);
+  // Chromium 141's computed values: the neutral's written hue 0 pulls the mix to 305; none and a converted black are missing
+  const mixed = (other) => resolve(`color-mix(in oklch, oklch(0.6 0.15 250) 50%, ${other} 50%)`, day);
+  assert.ok(same(mixed("oklch(0.145 0 0)"), resolve("oklch(0.3725 0.075 305)", day)));
+  assert.ok(same(mixed("oklch(0.145 0 none)"), resolve("oklch(0.3725 0.075 250)", day)));
+  assert.ok(same(mixed("black"), resolve("oklch(0.3 0.075 250)", day)));
+});
+
+// An ink or a weak tint is its colour pulled toward a neutral: mixed in oklch, the neutral's written hue 0 turned the success ink
+// brown and its band pink (20.10), so each keeps the hue of the colour it is made of.
+for (const theme of THEMES) {
+  test(`every derived mix of a colour with a neutral keeps the colour's hue by ${theme === "light" ? "day" : "night"}`, () => {
+    const decl = declarations(theme);
+    const turned = [];
+    for (const [name, value] of Object.entries(JSON.parse(readFileSync(path.join(root, "tokens", "derived.json"), "utf8")))) {
+      const sides = [...value.matchAll(/var\((--[a-z0-9-]+)\)/g)].map(([use]) => oklch(resolve(use, decl)));
+      const hued = sides.filter(([, chroma]) => chroma > 0.02);
+      if (sides.length !== 2 || hued.length !== 1 || !sides.some(([, chroma]) => chroma < 1e-6)) continue;
+      const [, , hue] = oklch(resolve(`var(${name})`, decl));
+      const off = Math.abs(((hue - hued[0][2] + 540) % 360) - 180);
+      if (off > 1) turned.push(`${name}: hue ${hue.toFixed(1)}, its colour's ${hued[0][2].toFixed(1)}`);
+    }
+    assert.deepEqual(turned, []);
+  });
+}
 
 test("the gate covers at least 40 text pairs, every token of them defined", () => {
   assert.ok(pairs.text.length >= 40, `${pairs.text.length} pairs`);

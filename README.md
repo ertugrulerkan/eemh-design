@@ -27,7 +27,10 @@ all draw with. Each of those stays in its own repository and takes this package 
   readable ink of destructive/warning/success, the primary's hover and soft tint), named once here. Each mixes only colour
   tokens both themes define, and is written into both `:root, .light` and `.dark`, so a `.dark` set on an element below the root mixes
   it again from that element's own night values. The mixes are the ones Tuval (faz 4) and Render (faz 3) drew with, verbatim:
-  moving a consumer onto them changes no pixel.
+  moving a consumer onto them changes no pixel. In v0.5.1 the inks, weak tints and rail-blue shades that pull a colour toward a
+  neutral mix in oklab: in oklch the neutral's written hue (`oklch(0.145 0 0)` has hue 0, and a browser mixes it so) turned
+  them, the success ink brown, its band and the warning band pink, the rail-blue selection lilac. In oklab a neutral moves
+  the lightness and the chroma alone, so each keeps its colour's hue, and they are drawn the colours the contrast gate read.
 - `tokens/keyframes.css` (v0.2.2): the `@keyframes` the `--animate-*` tokens of theme.json name, written into `dist/theme.css`'s
   `@theme` block, so an animation a consumer uses runs without the panel's own copy. In v0.2.2 `--popover-hover` mixes 88% + 12%
   (it was 80% + 12%, 92% opaque, its backdrop showing through) and the day `--sidebar-foreground` is the sidebar's light ink, as
@@ -59,7 +62,8 @@ all draw with. Each of those stays in its own repository and takes this package 
   brand text on their own tints, chip text on a muted ground, 2.7 to 4.4 : 1) not at all. `pairs.json` lists the text pairs the
   consumers draw (the panel's own class combinations and Tuval's and Render's chrome, 50) and the pairs they must not
   (`misuse`, 12); `scripts/contrast.mjs` reads the tokens as a browser shows them (`oklch()`, `#hex`, `rgb()`, `color-mix()` in
-  oklch, oklab and srgb, `var()`, a Tailwind alpha over the page) per theme, with WCAG 2 contrast. v0.5.0 also names the
+  oklch, oklab and srgb, `var()`, a Tailwind alpha over the page) per theme, with WCAG 2 contrast; in oklch a hue written in
+  `oklch()` is the colour's own even at chroma 0, as browsers mix it (v0.5.1). v0.5.0 also names the
   readable inks as Tailwind colours (`text-destructive-ink`, `-success-ink`, `-warning-ink`, `-brand-ink`,
   `text-muted-foreground-strong`), adds `--brand-ink` (the brand pulled 45% toward the foreground, as the others) and gives
   the night `--brand`, the day's value it already inherited, so a mix of it is a mix of colours both themes define.
