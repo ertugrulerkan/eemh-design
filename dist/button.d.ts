@@ -1,5 +1,5 @@
-import { type ButtonProps as BaseProps } from "./base.js";
-export { ButtonLink, type ButtonLinkProps, type ButtonSize, type ButtonVariant } from "./base.js";
+import { type ButtonProps as BaseProps } from "./registry/motion/button/base.js";
+export { ButtonLink, type ButtonLinkProps, type ButtonSize, type ButtonVariant } from "./registry/motion/button/base.js";
 declare const SIZED: {
     readonly sm: "h-7 gap-2 whitespace-nowrap";
     readonly md: "h-7 px-4 whitespace-nowrap";

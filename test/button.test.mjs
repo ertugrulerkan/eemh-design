@@ -5,8 +5,6 @@ import assert from "node:assert/strict";
 import { createElement as h } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Button, ButtonLink, STILL } from "eemh-design/button";
-import { cn } from "eemh-design/cn";
-import { EASE_OUT, SPRING_PRESS, useHoverCapable } from "eemh-design/motion";
 
 const classes = (element) => {
   const html = renderToStaticMarkup(element);
@@ -37,11 +35,7 @@ test("destructive is the outline variant in red, named on the element for the co
   assert.match(html, /border-destructive\/40/);
 });
 
-test("STILL holds a row still, beUI's link draws an anchor, the helpers come from here", () => {
+test("STILL holds a row still and beUI's link draws an anchor", () => {
   assert.deepEqual(STILL, { pressScale: 1, whileHover: { scale: 1 } });
   assert.match(renderToStaticMarkup(h(ButtonLink, { href: "/sign-up" }, "Start")), /^<a [^>]*href="\/sign-up"/);
-  assert.equal(cn("px-2 h-7", "h-auto"), "px-2 h-auto");
-  assert.deepEqual([...EASE_OUT], [0.16, 1, 0.3, 1]);
-  assert.equal(SPRING_PRESS.type, "spring");
-  assert.equal(typeof useHoverCapable, "function");
 });

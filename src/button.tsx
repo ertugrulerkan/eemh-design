@@ -1,8 +1,9 @@
 import { forwardRef } from "react";
-import { Button as Base, type ButtonProps as BaseProps } from "./base.js";
-import { cn } from "../cn.js";
+// beUI's button and the helpers it moves with, as the registries ship them but for the import paths (src/registry)
+import { Button as Base, type ButtonProps as BaseProps } from "./registry/motion/button/base.js";
+import { cn } from "./registry/lib/utils.js";
 
-export { ButtonLink, type ButtonLinkProps, type ButtonSize, type ButtonVariant } from "./base.js";
+export { ButtonLink, type ButtonLinkProps, type ButtonSize, type ButtonVariant } from "./registry/motion/button/base.js";
 
 /* The measurement standard's control: 28 high, a pill, its name on one line (12c, 20.10.2026: a narrowed control broke its name
    onto a second line the 28 cut off); an icon's button a 28 square with a control's corner. A tile (a card, a list's entry of two

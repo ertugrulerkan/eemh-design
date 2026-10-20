@@ -44,9 +44,3 @@ export declare const SPRING_GLIDE: {
     readonly damping: 50;
     readonly mass: 0.5;
 };
-/**
- * Returns true only on devices that have a true hover (mouse / trackpad).
- * Touch devices fire phantom `:hover` on tap that sticks until tap-elsewhere
- * — gate hover-only effects (scale lifts, magnetic pulls) behind this.
- */
-export declare function useHoverCapable(): boolean;

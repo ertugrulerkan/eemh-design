@@ -1,8 +1,9 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { forwardRef } from "react";
-import { Button as Base } from "./base.js";
-import { cn } from "../cn.js";
-export { ButtonLink } from "./base.js";
+// beUI's button and the helpers it moves with, as the registries ship them but for the import paths (src/registry)
+import { Button as Base } from "./registry/motion/button/base.js";
+import { cn } from "./registry/lib/utils.js";
+export { ButtonLink } from "./registry/motion/button/base.js";
 /* The measurement standard's control: 28 high, a pill, its name on one line (12c, 20.10.2026: a narrowed control broke its name
    onto a second line the 28 cut off); an icon's button a 28 square with a control's corner. A tile (a card, a list's entry of two
    lines, a choice with its note) is not a control: as high as it holds, its words wrapping. */

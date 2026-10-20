@@ -14,16 +14,8 @@
     "./tokens.css": "./dist/tokens.css",
     "./theme.css": "./dist/theme.css",
     "./button": {
-      "types": "./dist/button/index.d.ts",
-      "default": "./dist/button/index.js"
-    },
-    "./motion": {
-      "types": "./dist/motion.d.ts",
-      "default": "./dist/motion.js"
-    },
-    "./cn": {
-      "types": "./dist/cn.d.ts",
-      "default": "./dist/cn.js"
+      "types": "./dist/button.d.ts",
+      "default": "./dist/button.js"
     }
   },
   "scripts": {

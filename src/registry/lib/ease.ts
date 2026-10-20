@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-
-// Shared motion tokens (the panel's and Render's src/.../lib/ease.ts until v0.3.0, 12e): the easing curves the components
-// move with, and the springs, the canonical physics used across them.
+// Shared motion tokens. Easing curves mirror the CSS custom properties in
+// globals.css; springs are the canonical physics used across components.
 // Strong custom variants — defaults like `ease-in`/`ease-out` feel weak.
 
 export const EASE_OUT = [0.16, 1, 0.3, 1] as const;
@@ -57,23 +55,3 @@ export const SPRING_GLIDE = {
   damping: 50,
   mass: 0.5,
 } as const;
-
-/**
- * Returns true only on devices that have a true hover (mouse / trackpad).
- * Touch devices fire phantom `:hover` on tap that sticks until tap-elsewhere
- * — gate hover-only effects (scale lifts, magnetic pulls) behind this.
- */
-export function useHoverCapable() {
-  const [canHover, setCanHover] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const update = () => setCanHover(mq.matches);
-    update();
-    mq.addEventListener?.("change", update);
-    return () => mq.removeEventListener?.("change", update);
-  }, []);
-
-  return canHover;
-}

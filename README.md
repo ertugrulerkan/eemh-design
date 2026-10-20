@@ -32,15 +32,17 @@ all draw with. Each of those stays in its own repository and takes this package 
   `@theme` block, so an animation a consumer uses runs without the panel's own copy. In v0.2.2 `--popover-hover` mixes 88% + 12%
   (it was 80% + 12%, 92% opaque, its backdrop showing through) and the day `--sidebar-foreground` is the sidebar's light ink, as
   the day sidebar is drawn dark.
-- `src/` (v0.3.0, 12e): the code the consumers kept a copy of each, moved here so it has one owner, compiled to `dist/` with its
-  types:
-  - `eemh-design/button`: the panel's button (`Button`, `STILL`): beUI's moving button sized to the measurement standard, a
-    control 28 high with its name on one line, `size="tile"` for a button as high as it holds with its words wrapping, still
-    under the pointer; beUI's own `ButtonLink` beside it. `src/button/base.tsx` is beUI's component as the panel took it.
-  - `eemh-design/motion`: the easing curves and springs the components move with, and `useHoverCapable`.
-  - `eemh-design/cn`: `cn`, class names joined with a later Tailwind utility winning over an earlier one of its kind.
+- `src/` (v0.3.0, 12e): the panel's button, which the panel (eemh-ronchamp) and Render (eemh-render) each kept a copy of, moved
+  here so it has one owner, compiled to `dist/` with its types and exported as `eemh-design/button`:
+  - `src/button.tsx`: `Button` and `STILL`. beUI's moving button sized to the measurement standard, a control 28 high with its
+    name on one line, `size="tile"` for a button as high as it holds with its words wrapping, still under the pointer; beUI's
+    own `ButtonLink` beside it.
+  - `src/registry/`: what it is built on, as its registries ship it (beUI's `motion/button/base`, its `lib/ease` and
+    `lib/hooks/use-hover-capable`, shadcn's `lib/utils`), byte for byte but for the import paths, which are relative here. They
+    are synced as the panel syncs its own (ui-rules K2: fetch the item's JSON, compare `files[].content`), never edited. The
+    consumers keep their own copies of the `lib` files, which their other registry components import by path.
 
-  They need `react`, `motion`, `clsx` and `tailwind-merge` from the consumer (peer dependencies). Tailwind does not read
+  It needs `react`, `motion`, `clsx` and `tailwind-merge` from the consumer (peer dependencies). Tailwind does not read
   `node_modules`, so a consumer names the package's code as a source in its stylesheet, or the button's classes are never
   written: `@source "<path to>/node_modules/eemh-design/dist";`.
 - `tokens/scale.json`: the measured scale the panel keeps only as raw numbers in its components (type 11 / 12.5 / 13.5 / 15 /
