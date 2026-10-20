@@ -33,6 +33,9 @@
     ["success-ink", "success/15", "a done badge (zaha, projects)"],
     ["brand-ink", "brand/10", "a brand chip"],
     ["brand-ink", "brand/12", "an agent or trigger chip (automation)"],
+    ["brand-ink", "background", "brand words on the page (zaha's cover, Nolli's taken and road)"],
+    ["brand-ink", "card", "brand words on a card (zaha's active layout, Blueprint's step)"],
+    ["warning-ink", "background", "Blueprint: the office's word over the rule"],
     ["rail-blue-foreground", "rail-blue", "Tuval: the accent button"],
     ["rail-blue-ink", "background", "Tuval: accent text and icons"],
     ["rail-blue-ink", "popover", "Tuval: accent text in panels"],
@@ -64,6 +67,10 @@
     ["success", "success/12", "20.10: a ready badge"],
     ["success", "success/15", "20.10: a done badge"],
     ["brand", "brand/10", "20.10: a brand chip"],
-    ["brand", "brand/12", "20.10: an agent or trigger chip"]
+    ["brand", "brand/12", "20.10: an agent or trigger chip"],
+    ["brand", "background", "20.10: brand words on the day page"],
+    ["brand", "card", "20.10: brand words on a day card"],
+    ["warning", "background", "20.10: warning words on the day page"],
+    ["success", "background", "20.10: success words on the day page"]
   ]
 }
