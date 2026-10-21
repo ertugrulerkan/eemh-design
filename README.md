@@ -40,6 +40,8 @@ all draw with. Each of those stays in its own repository and takes this package 
   - `src/button/index.tsx`: `Button` and `STILL`. beUI's moving button sized to the measurement standard, a control 28 high with its
     name on one line, `size="tile"` for a button as high as it holds with its words wrapping, still under the pointer; beUI's
     own `ButtonLink` beside it.
+    Every button names the variant it is drawn in on the element (`data-button`), beUI's default (primary) too (v0.5.2): a
+    host's dress for bare buttons (Mies's `.mies-forms`) matched a button that named none.
   - `src/button/registry/`: what it is built on, as its registries ship it (beUI's `motion/button/base`, its `lib/ease` and
     `lib/hooks/use-hover-capable`, shadcn's `lib/utils`), byte for byte but for the import paths, which are relative here. They
     are synced as the panel syncs its own (ui-rules K2: fetch the item's JSON, compare `files[].content`), never edited. The
