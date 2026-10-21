@@ -28,7 +28,9 @@ export type ButtonProps = Omit<BaseProps, "variant" | "size"> & { variant?: Base
 /* beUI's button as the rooms use it, an icon held at 16px unless it names its own size and its variant named on the element for the
    consumer's stylesheet (the panel's panel.css), said outside the component's file. The panel and Render each kept a copy of it
    until v0.3.0 (12e). */
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button({ className, variant, size = "md", ...rest }, ref) {
+/* beUI's own default variant, named here too: the element says the variant it is drawn in, the default's as well (a host's dress
+   for bare buttons, Mies's .mies-forms, matches a button that names none) */
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button({ className, variant = "primary", size = "md", ...rest }, ref) {
   const destructive = variant === "destructive";
   const tile = size === "tile";
   return (

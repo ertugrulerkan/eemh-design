@@ -39,3 +39,10 @@ test("STILL holds a row still and beUI's link draws an anchor", () => {
   assert.deepEqual(STILL, { pressScale: 1, whileHover: { scale: 1 } });
   assert.match(renderToStaticMarkup(h(ButtonLink, { href: "/sign-up" }, "Start")), /^<a [^>]*href="\/sign-up"/);
 });
+
+test("every button names its variant on the element, the default too, so a host's dress for bare buttons passes it by", () => {
+  // the Mies hosts dress every button with neither data-slot nor data-button (ronchamp mies.css, .mies-forms): a button left at
+  // beUI's default variant named none and took the host's dress over its own
+  assert.match(renderToStaticMarkup(h(Button, {}, "Open")), /data-button="primary"/);
+  assert.match(renderToStaticMarkup(h(Button, { variant: "ghost" }, "Open")), /data-button="ghost"/);
+});

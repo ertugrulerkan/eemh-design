@@ -12,7 +12,7 @@ const SIZED = {
 };
 const DESTRUCTIVE = "border-destructive/40 text-destructive hover:bg-destructive/10";
 export const STILL = { pressScale: 1, whileHover: { scale: 1 } };
-export const Button = forwardRef(function Button({ className, variant, size = "md", ...rest }, ref) {
+export const Button = forwardRef(function Button({ className, variant = "primary", size = "md", ...rest }, ref) {
     const destructive = variant === "destructive";
     const tile = size === "tile";
     return (_jsx(Base, { ref: ref, ...(tile ? STILL : {}), variant: destructive ? "outline" : variant, size: tile ? "md" : size, "data-button": destructive ? "destructive" : variant, className: cn(SIZED[size], "[&_svg:not([class*='size-'])]:size-4", destructive && DESTRUCTIVE, className), ...rest }));
