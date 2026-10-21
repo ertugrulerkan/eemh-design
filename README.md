@@ -42,6 +42,8 @@ all draw with. Each of those stays in its own repository and takes this package 
     own `ButtonLink` beside it.
     Every button names the variant it is drawn in on the element (`data-button`), beUI's default (primary) too (v0.5.2): a
     host's dress for bare buttons (Mies's `.mies-forms`) matched a button that named none.
+    v0.5.3: `--chart-3` and `--chart-4` sit inside the chart lightness band with chroma and 3 : 1 against the card in both themes, and stay
+    apart from their neighbours under colour-blind simulation (tokens/pairs.json `marks` holds the contrast).
   - `src/button/registry/`: what it is built on, as its registries ship it (beUI's `motion/button/base`, its `lib/ease` and
     `lib/hooks/use-hover-capable`, shadcn's `lib/utils`), byte for byte but for the import paths, which are relative here. They
     are synced as the panel syncs its own (ui-rules K2: fetch the item's JSON, compare `files[].content`), never edited. The
