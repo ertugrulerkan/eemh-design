@@ -4,7 +4,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createElement as h } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { Button, ButtonLink, STILL } from "eemh-design/button";
+import { BeuiButtonLink, Button, ButtonLink, STILL } from "eemh-design/button";
 
 const classes = (element) => {
   const html = renderToStaticMarkup(element);
@@ -45,4 +45,19 @@ test("every button names its variant on the element, the default too, so a host'
   // beUI's default variant named none and took the host's dress over its own
   assert.match(renderToStaticMarkup(h(Button, {}, "Open")), /data-button="primary"/);
   assert.match(renderToStaticMarkup(h(Button, { variant: "ghost" }, "Open")), /data-button="ghost"/);
+});
+
+
+test("the panel's link is a control as its button is: 28 high, its icon at 16, its variant named on the element", () => {
+  // the Aldo room's links to Zaha (22.10.2026 scan): beUI's own link drew them 32 high with a 24px arrow and no variant name
+  for (const size of [undefined, "sm", "md", "lg"]) {
+    const got = classes(h(ButtonLink, { size, href: "/zaha" }, "Open the study"));
+    assert.ok(got.has("h-7") && got.has("whitespace-nowrap") && !got.has("h-8") && !got.has("h-10") && !got.has("h-12"), [...got].join(" "));
+    assert.match(renderToStaticMarkup(h(ButtonLink, { size, href: "/zaha" }, "Open")), /_svg:not\(\[class\*=[^\]]*size-[^\]]*\]\)\]:size-4/);
+  }
+  const ghost = renderToStaticMarkup(h(ButtonLink, { variant: "ghost", href: "/zaha" }, "Study"));
+  assert.match(ghost, /^<a [^>]*data-button="ghost"/);
+  assert.match(renderToStaticMarkup(h(ButtonLink, { href: "/zaha" }, "Study")), /data-button="primary"/);
+  // the site's pages (the landing, outside the panel's rules) keep beUI's own link at its own sizes
+  assert.ok(classes(h(BeuiButtonLink, { size: "lg", href: "/sign-up" }, "Start")).has("h-12"));
 });

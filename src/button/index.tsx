@@ -1,9 +1,10 @@
 import { forwardRef } from "react";
 // beUI's button and the helpers it moves with, as the registries ship them but for the import paths (src/registry)
-import { Button as Base, type ButtonProps as BaseProps } from "./registry/motion/button/base.js";
+import { Button as Base, ButtonLink as BaseLink, type ButtonLinkProps as BaseLinkProps, type ButtonProps as BaseProps } from "./registry/motion/button/base.js";
 import { cn } from "./registry/lib/utils.js";
 
-export { ButtonLink, type ButtonLinkProps, type ButtonSize, type ButtonVariant } from "./registry/motion/button/base.js";
+/* beUI's own link at its own sizes, for the site's pages (the landing keeps its own stylesheet, outside the panel's rules) */
+export { ButtonLink as BeuiButtonLink, type ButtonSize, type ButtonVariant } from "./registry/motion/button/base.js";
 
 /* The measurement standard's control: 28 high, a pill, its name on one line (12c, 20.10.2026: a narrowed control broke its name
    onto a second line the 28 cut off); an icon's button a 28 square with a control's corner. A tile (a card, a list's entry of two
@@ -41,6 +42,23 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       size={tile ? "md" : size}
       data-button={destructive ? "destructive" : variant}
       className={cn(SIZED[size], "[&_svg:not([class*='size-'])]:size-4", destructive && DESTRUCTIVE, className)}
+      {...rest}
+    />
+  );
+});
+
+export type ButtonLinkProps = Omit<BaseLinkProps, "size"> & { size?: Exclude<keyof typeof SIZED, "tile"> };
+
+/* The panel's link that looks a button (Aldo's way to a Zaha study): a control as the button is, 28 high, its name on one line, its
+   icon at 16 and its variant named on the element; beUI's own link drew it 32 high with a 24px arrow (22.10.2026 scan). */
+export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function ButtonLink({ className, variant = "primary", size = "md", ...rest }, ref) {
+  return (
+    <BaseLink
+      ref={ref}
+      variant={variant}
+      size={size}
+      data-button={variant}
+      className={cn(SIZED[size], "[&_svg:not([class*='size-'])]:size-4", className)}
       {...rest}
     />
   );

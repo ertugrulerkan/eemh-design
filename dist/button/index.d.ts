@@ -1,5 +1,5 @@
-import { type ButtonProps as BaseProps } from "./registry/motion/button/base.js";
-export { ButtonLink, type ButtonLinkProps, type ButtonSize, type ButtonVariant } from "./registry/motion/button/base.js";
+import { type ButtonLinkProps as BaseLinkProps, type ButtonProps as BaseProps } from "./registry/motion/button/base.js";
+export { ButtonLink as BeuiButtonLink, type ButtonSize, type ButtonVariant } from "./registry/motion/button/base.js";
 declare const SIZED: {
     readonly sm: "h-7 gap-2 whitespace-nowrap";
     readonly md: "h-7 px-4 whitespace-nowrap";
@@ -18,3 +18,7 @@ export type ButtonProps = Omit<BaseProps, "variant" | "size"> & {
     size?: keyof typeof SIZED;
 };
 export declare const Button: import("react").ForwardRefExoticComponent<Omit<ButtonProps, "ref"> & import("react").RefAttributes<HTMLButtonElement>>;
+export type ButtonLinkProps = Omit<BaseLinkProps, "size"> & {
+    size?: Exclude<keyof typeof SIZED, "tile">;
+};
+export declare const ButtonLink: import("react").ForwardRefExoticComponent<Omit<ButtonLinkProps, "ref"> & import("react").RefAttributes<HTMLAnchorElement>>;

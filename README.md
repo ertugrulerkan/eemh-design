@@ -44,6 +44,8 @@ all draw with. Each of those stays in its own repository and takes this package 
     host's dress for bare buttons (Mies's `.mies-forms`) matched a button that named none.
     v0.5.3: `--chart-3` and `--chart-4` sit inside the chart lightness band with chroma and 3 : 1 against the card in both themes, and stay
     apart from their neighbours under colour-blind simulation (tokens/pairs.json `marks` holds the contrast).
+    v0.5.4: `ButtonLink` is the panel's link drawn as a control: 28 high, its icon at 16, its variant named on the element; beUI's
+    own link, at its own sizes, is `BeuiButtonLink`, for the site's pages (beUI's drew the Aldo room's links 32 high with a 24px arrow).
   - `src/button/registry/`: what it is built on, as its registries ship it (beUI's `motion/button/base`, its `lib/ease` and
     `lib/hooks/use-hover-capable`, shadcn's `lib/utils`), byte for byte but for the import paths, which are relative here. They
     are synced as the panel syncs its own (ui-rules K2: fetch the item's JSON, compare `files[].content`), never edited. The
