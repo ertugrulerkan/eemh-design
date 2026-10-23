@@ -67,7 +67,8 @@ all draw with. Each of those stays in its own repository and takes this package 
     reader, `said` written, `quiet` inside a wait already said), `IsoFill` (a map's or canvas's whole box), `IsoEmpty` (the drawing
     at rest over its one sentence, with a `title` and an `action`; `size="row"` in a line). The consumer wraps
     `IsoLoader` with its own word for "Loading…".
-  - `src/iso/dom.ts` (`eemh-design/iso/dom`): the same drawings for a page drawn without React (Mies): `isoSvg`, `isoWait`, `isoEmpty`.
+  - `src/iso/dom.ts` (`eemh-design/iso/dom`): the same drawing for a page drawn without React (Mies): `isoSvg`, set in the page's own
+    lines (`iso-line`).
   - `src/iso/iso.css` (`eemh-design/iso.css`): the faces in the theme's tones (`--foreground`, `--background`, `--border`, `--brand`,
     each falling back to the text's own colour), a wait unseen under 150 ms, only transform and opacity moving, nothing moving
     under reduced motion.

@@ -27,27 +27,3 @@ export function isoSvg(motif, { height, idle = false }) {
     svg.append(whole);
     return svg;
 }
-export function isoWait({ motif = "blocks", label, said, row = false }) {
-    const wait = document.createElement("span");
-    wait.setAttribute("role", "status");
-    wait.className = row ? "iso-wait iso-line" : "iso-wait iso-stack";
-    wait.append(isoSvg(row ? "block" : motif, { height: row ? 16 : 64 }));
-    const words = said ?? label;
-    if (words) {
-        const text = document.createElement("span");
-        text.textContent = words;
-        if (!said)
-            text.className = "iso-unseen";
-        wait.append(text);
-    }
-    return wait;
-}
-export function isoEmpty({ motif = "grid", sentence, row = false }) {
-    const empty = document.createElement(row ? "span" : "div");
-    empty.className = row ? "iso-line" : "iso-stack";
-    empty.append(isoSvg(row ? "block" : motif, { height: row ? 16 : 64, idle: true }));
-    const text = document.createElement(row ? "span" : "p");
-    text.textContent = sentence;
-    empty.append(text);
-    return empty;
-}

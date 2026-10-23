@@ -79,7 +79,7 @@ test("a page without React draws the same drawing: its parts, its classes and it
   };
   globalThis.document = { createElementNS: (_ns, tag) => make(tag), createElement: (tag) => make(tag) };
   try {
-    const { isoSvg, isoWait, isoEmpty } = await import("eemh-design/iso/dom");
+    const { isoSvg } = await import("eemh-design/iso/dom");
     const svg = isoSvg("building", { height: 64 });
     const drawn = isoDrawing("building");
     assert.equal(svg.attrs.viewBox, drawn.view);
@@ -91,13 +91,9 @@ test("a page without React draws the same drawing: its parts, its classes and it
     // the plate does not move: no style of its own
     assert.equal(parts[0].attrs.style, undefined);
     assert.equal(parts[1].children[2].attrs.points, drawn.parts[1].faces[2].points);
-    const wait = isoWait({ motif: "blocks", label: "Saving…" });
-    assert.equal(wait.attrs.role, "status");
-    assert.equal(wait.children[1].className, "iso-unseen");
-    const empty = isoEmpty({ sentence: "No custom properties.", row: true });
-    assert.equal(empty.className, "iso-line");
-    assert.equal(empty.children[0].attrs.class, "iso iso-idle");
-    assert.equal(empty.children[1].textContent, "No custom properties.");
+    const resting = isoSvg("block", { height: 16, idle: true });
+    assert.equal(resting.attrs.class, "iso iso-idle");
+    assert.equal(resting.children[0].attrs.class, "iso-float");
   } finally {
     delete globalThis.document;
   }

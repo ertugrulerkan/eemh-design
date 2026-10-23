@@ -35,7 +35,5 @@
 /* a button at work (./button `loading`): its block stands where its icon was */
 [data-loading] > svg { display: none; }
 
-/* a page drawn without Tailwind (./dom.ts): the drawing over its words, or one block before them in a line */
-.iso-stack { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding-block: 16px; text-align: center; }
+/* a page drawn without Tailwind (./dom.ts): one block before its words in a line */
 .iso-line { display: inline-flex; align-items: center; gap: 8px; vertical-align: middle; }
-.iso-unseen { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

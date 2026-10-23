@@ -1,8 +1,8 @@
 import { isoDrawing, isoFaceClass, isoPartStyle, type IsoDrawn } from "./geometry.js";
 
 /* The same drawings for a page drawn without React (Mies's own dialogs and panels): the elements built from ./geometry.ts, styled
-   by the same iso.css, sized by the height asked (such a page carries no Tailwind). Only elements and their attributes, the style
-   too, so the least DOM draws it. */
+   by the same iso.css, sized by the height asked (such a page carries no Tailwind), the page setting them in its own lines and
+   words (iso.css `iso-line`). Only elements and their attributes, the style too, so the least DOM draws it. */
 
 const SVG = "http://www.w3.org/2000/svg";
 
@@ -31,32 +31,4 @@ export function isoSvg(motif: IsoDrawn, { height, idle = false }: { height: numb
   }
   svg.append(whole);
   return svg;
-}
-
-/** A wait: the drawing, unseen under 150 ms, said to a screen reader as `label`, or with `said` written under it (beside it in a
- * `row`, one block in the line's own type). */
-export function isoWait({ motif = "blocks", label, said, row = false }: { motif?: IsoDrawn; label?: string; said?: string; row?: boolean }): HTMLElement {
-  const wait = document.createElement("span");
-  wait.setAttribute("role", "status");
-  wait.className = row ? "iso-wait iso-line" : "iso-wait iso-stack";
-  wait.append(isoSvg(row ? "block" : motif, { height: row ? 16 : 64 }));
-  const words = said ?? label;
-  if (words) {
-    const text = document.createElement("span");
-    text.textContent = words;
-    if (!said) text.className = "iso-unseen";
-    wait.append(text);
-  }
-  return wait;
-}
-
-/** An empty place: the drawing at rest over its one honest sentence (`row`: one block before it, in the line's own type). */
-export function isoEmpty({ motif = "grid", sentence, row = false }: { motif?: IsoDrawn; sentence: string; row?: boolean }): HTMLElement {
-  const empty = document.createElement(row ? "span" : "div");
-  empty.className = row ? "iso-line" : "iso-stack";
-  empty.append(isoSvg(row ? "block" : motif, { height: row ? 16 : 64, idle: true }));
-  const text = document.createElement(row ? "span" : "p");
-  text.textContent = sentence;
-  empty.append(text);
-  return empty;
 }
