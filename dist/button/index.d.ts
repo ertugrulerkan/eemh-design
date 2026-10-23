@@ -16,6 +16,7 @@ export declare const STILL: {
 export type ButtonProps = Omit<BaseProps, "variant" | "size"> & {
     variant?: BaseProps["variant"] | "destructive";
     size?: keyof typeof SIZED;
+    loading?: boolean;
 };
 export declare const Button: import("react").ForwardRefExoticComponent<Omit<ButtonProps, "ref"> & import("react").RefAttributes<HTMLButtonElement>>;
 export type ButtonLinkProps = Omit<BaseLinkProps, "size"> & {

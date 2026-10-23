@@ -56,6 +56,21 @@ all draw with. Each of those stays in its own repository and takes this package 
   written: `@source "<path to>/node_modules/eemh-design/dist/button";` (the folder holds the code alone, so
   the tokens' names in `dist/` do not count as used, and the compiled code carries no comments, whose words Tailwind would
   read as classes).
+- `src/iso/` (23.10.2026, the owner: "tüm bekleme, loading ekranlarını izometrik animasyonlara çevir, sistem genelindeki hepsi" and
+  "bekleme/boş ekranlarda da izometrik animasyon"): every wait and every empty place drawn isometric, with one owner for the panel,
+  Render and Mies:
+  - `src/iso/geometry.ts`: the drawings as data, framework-free. Five motifs (a building rising on its parcel, a sheet's leaves, blocks
+    coming together, a grid's wave, an escape route lit step by step) and the block a row or a button draws; each part's faces at 30
+    degrees, its delay into the 2.4 s turn and where it comes from. `stayFor()`: a wait unseen under 150 ms, and shown at least 400 ms.
+  - `src/iso/index.tsx` (`eemh-design/iso`): `IsoLoader` (sizes screen, section, card, fit, row, button; `label` said to a screen
+    reader, `said` written, `quiet` inside a wait already said), `IsoFill` (a map's or canvas's whole box), `IsoEmpty` (the drawing
+    at rest over its one sentence, with a `title` and an `action`; `size="row"` in a line), `useWaitShown()`. The consumer wraps
+    `IsoLoader` with its own word for "Loading…".
+  - `src/iso/dom.ts` (`eemh-design/iso/dom`): the same drawings for a page drawn without React (Mies): `isoSvg`, `isoWait`, `isoEmpty`.
+  - `src/iso/iso.css` (`eemh-design/iso.css`): the faces in the theme's tones (`--foreground`, `--background`, `--border`, `--brand`,
+    each falling back to the text's own colour), only transform and opacity moving, nothing moving under reduced motion.
+  `Button` takes `loading`: pressed no more, said busy, the block where its icon stood. A consumer names `dist/iso` as a source
+  beside `dist/button` (`@source "<path to>/node_modules/eemh-design/dist/iso";`) and imports `eemh-design/iso.css` once.
 - `src/vite/` (v0.4.0, 13b-P2b): the fix for motion-dom's keyboard press, which the button presses through, kept with it: the file
   `dist/es/gestures/press/utils/keyboard.mjs` (the same from 13.3.0 to 14.4.0) leaves the keyup and blur listeners of every Enter
   press on the element, so the next blur, long after the press ended, fires a pointercancel that cancels a mouse press under way

@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 // beUI's button and the helpers it moves with, as the registries ship them but for the import paths (src/registry)
 import { Button as Base, ButtonLink as BaseLink, type ButtonLinkProps as BaseLinkProps, type ButtonProps as BaseProps } from "./registry/motion/button/base.js";
 import { cn } from "./registry/lib/utils.js";
+import { IsoLoader } from "../iso/index.js";
 
 /* beUI's own link at its own sizes, for the site's pages (the landing keeps its own stylesheet, outside the panel's rules) */
 export { ButtonLink as BeuiButtonLink, type ButtonSize, type ButtonVariant } from "./registry/motion/button/base.js";
@@ -24,14 +25,16 @@ const DESTRUCTIVE = "border-destructive/40 text-destructive hover:bg-destructive
    (a tile, `size="tile"`, has it already). */
 export const STILL = { pressScale: 1, whileHover: { scale: 1 } } as const;
 
-export type ButtonProps = Omit<BaseProps, "variant" | "size"> & { variant?: BaseProps["variant"] | "destructive"; size?: keyof typeof SIZED };
+/** `loading`: the work the button started still going (the owner, 23.10.2026: every wait isometric): one block where its icon stood
+ * (iso.css hides the icon), the button not pressed again meanwhile, said busy. */
+export type ButtonProps = Omit<BaseProps, "variant" | "size"> & { variant?: BaseProps["variant"] | "destructive"; size?: keyof typeof SIZED; loading?: boolean };
 
 /* beUI's button as the rooms use it, an icon held at 16px unless it names its own size and its variant named on the element for the
    consumer's stylesheet (the panel's panel.css), said outside the component's file. The panel and Render each kept a copy of it
    until v0.3.0 (12e). */
 /* beUI's own default variant, named here too: the element says the variant it is drawn in, the default's as well (a host's dress
    for bare buttons, Mies's .mies-forms, matches a button that names none) */
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button({ className, variant = "primary", size = "md", ...rest }, ref) {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button({ className, variant = "primary", size = "md", loading = false, disabled, children, ...rest }, ref) {
   const destructive = variant === "destructive";
   const tile = size === "tile";
   return (
@@ -42,8 +45,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       size={tile ? "md" : size}
       data-button={destructive ? "destructive" : variant}
       className={cn(SIZED[size], "[&_svg:not([class*='size-'])]:size-4", destructive && DESTRUCTIVE, className)}
+      disabled={loading || disabled}
+      {...(loading ? { "aria-busy": true, "data-loading": "" } : {})}
       {...rest}
-    />
+    >
+      {loading ? <IsoLoader size="button" quiet /> : null}
+      {children}
+    </Base>
   );
 });
 

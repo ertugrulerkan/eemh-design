@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Reads tokens/*.json and writes dist/tokens.css, dist/theme.css, dist/tokens.js, dist/tokens.d.ts.
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { copyFileSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -57,4 +57,7 @@ export declare const derived: Record<string, string>;
 `;
 writeFileSync(path.join(distDir, "tokens.d.ts"), tokensDts);
 
-console.log("wrote dist/tokens.css, dist/theme.css, dist/tokens.js, dist/tokens.d.ts");
+// the isometric drawings' stylesheet ships as written (./iso, ./iso/dom)
+copyFileSync(path.join(root, "src", "iso", "iso.css"), path.join(distDir, "iso.css"));
+
+console.log("wrote dist/tokens.css, dist/theme.css, dist/tokens.js, dist/tokens.d.ts, dist/iso.css");

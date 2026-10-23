@@ -17,6 +17,15 @@
       "types": "./dist/button/index.d.ts",
       "default": "./dist/button/index.js"
     },
+    "./iso": {
+      "types": "./dist/iso/index.d.ts",
+      "default": "./dist/iso/index.js"
+    },
+    "./iso/dom": {
+      "types": "./dist/iso/dom.d.ts",
+      "default": "./dist/iso/dom.js"
+    },
+    "./iso.css": "./dist/iso.css",
     "./vite": {
       "types": "./dist/vite/index.d.ts",
       "default": "./dist/vite/index.js"

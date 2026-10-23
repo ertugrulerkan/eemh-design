@@ -1,0 +1,55 @@
+import { isoDrawing, isoFaceClass, isoPartStyle } from "./geometry.js";
+const SVG = "http://www.w3.org/2000/svg";
+export function isoSvg(motif, { height, idle = false }) {
+    const drawn = isoDrawing(motif);
+    const svg = document.createElementNS(SVG, "svg");
+    svg.setAttribute("viewBox", drawn.view);
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("class", idle ? "iso iso-idle" : "iso");
+    svg.style.height = `${height}px`;
+    svg.style.width = "auto";
+    svg.style.overflow = "visible";
+    svg.style.flexShrink = "0";
+    const whole = document.createElementNS(SVG, "g");
+    if (idle)
+        whole.setAttribute("class", "iso-float");
+    for (const part of drawn.parts) {
+        const g = document.createElementNS(SVG, "g");
+        g.setAttribute("class", `iso-${part.motion}`);
+        for (const [name, value] of Object.entries(isoPartStyle(part)))
+            g.style.setProperty(name === "animationDelay" ? "animation-delay" : name, value);
+        for (const face of part.faces) {
+            const polygon = document.createElementNS(SVG, "polygon");
+            polygon.setAttribute("class", isoFaceClass(face));
+            polygon.setAttribute("points", face.points);
+            g.append(polygon);
+        }
+        whole.append(g);
+    }
+    svg.append(whole);
+    return svg;
+}
+export function isoWait({ motif = "blocks", label, said, row = false }) {
+    const wait = document.createElement("span");
+    wait.setAttribute("role", "status");
+    wait.className = row ? "iso-wait iso-line" : "iso-wait iso-stack";
+    wait.append(isoSvg(row ? "block" : motif, { height: row ? 16 : 64 }));
+    const words = said ?? label;
+    if (words) {
+        const text = document.createElement("span");
+        text.textContent = words;
+        if (!said)
+            text.className = "iso-unseen";
+        wait.append(text);
+    }
+    return wait;
+}
+export function isoEmpty({ motif = "grid", sentence, row = false }) {
+    const empty = document.createElement(row ? "span" : "div");
+    empty.className = row ? "iso-line" : "iso-stack";
+    empty.append(isoSvg(row ? "block" : motif, { height: row ? 16 : 64, idle: true }));
+    const text = document.createElement(row ? "span" : "p");
+    text.textContent = sentence;
+    empty.append(text);
+    return empty;
+}
