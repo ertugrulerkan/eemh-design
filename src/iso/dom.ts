@@ -1,7 +1,8 @@
 import { isoDrawing, isoFaceClass, isoPartStyle, type IsoDrawn } from "./geometry.js";
 
 /* The same drawings for a page drawn without React (Mies's own dialogs and panels): the elements built from ./geometry.ts, styled
-   by the same iso.css, sized by the height asked (such a page carries no Tailwind). */
+   by the same iso.css, sized by the height asked (such a page carries no Tailwind). Only elements and their attributes, the style
+   too, so the least DOM draws it. */
 
 const SVG = "http://www.w3.org/2000/svg";
 
@@ -12,16 +13,14 @@ export function isoSvg(motif: IsoDrawn, { height, idle = false }: { height: numb
   svg.setAttribute("viewBox", drawn.view);
   svg.setAttribute("aria-hidden", "true");
   svg.setAttribute("class", idle ? "iso iso-idle" : "iso");
-  svg.style.height = `${height}px`;
-  svg.style.width = "auto";
-  svg.style.overflow = "visible";
-  svg.style.flexShrink = "0";
+  svg.setAttribute("style", `height: ${height}px; width: auto; overflow: visible; flex-shrink: 0`);
   const whole = document.createElementNS(SVG, "g");
   if (idle) whole.setAttribute("class", "iso-float");
   for (const part of drawn.parts) {
     const g = document.createElementNS(SVG, "g");
     g.setAttribute("class", `iso-${part.motion}`);
-    for (const [name, value] of Object.entries(isoPartStyle(part))) g.style.setProperty(name === "animationDelay" ? "animation-delay" : name, value);
+    const style = Object.entries(isoPartStyle(part)).map(([name, value]) => `${name === "animationDelay" ? "animation-delay" : name}: ${value}`);
+    if (style.length) g.setAttribute("style", style.join("; "));
     for (const face of part.faces) {
       const polygon = document.createElementNS(SVG, "polygon");
       polygon.setAttribute("class", isoFaceClass(face));

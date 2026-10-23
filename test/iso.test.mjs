@@ -73,7 +73,7 @@ test("a button at work is pressed no more, said busy, its block where its icon s
 test("a page without React draws the same drawing: its parts, its classes and its delays", async () => {
   // the few DOM calls ./iso/dom makes, on plain objects
   const make = (tag) => {
-    const node = { tag, attrs: {}, children: [], style: { props: {}, setProperty(name, value) { this.props[name] = value; } }, className: "", textContent: "",
+    const node = { tag, attrs: {}, children: [], className: "", textContent: "",
       setAttribute(name, value) { this.attrs[name] = value; }, append(...more) { this.children.push(...more); } };
     return node;
   };
@@ -83,11 +83,13 @@ test("a page without React draws the same drawing: its parts, its classes and it
     const svg = isoSvg("building", { height: 64 });
     const drawn = isoDrawing("building");
     assert.equal(svg.attrs.viewBox, drawn.view);
-    assert.equal(svg.style.height, "64px");
+    assert.match(svg.attrs.style, /^height: 64px; width: auto;/);
     const parts = svg.children[0].children;
     assert.equal(parts.length, drawn.parts.length);
     assert.deepEqual(parts.map((g) => g.attrs.class), drawn.parts.map((part) => `iso-${part.motion}`));
-    assert.equal(parts[1].style.props["animation-delay"], `${drawn.parts[1].delay.toFixed(2)}s`);
+    assert.equal(parts[1].attrs.style, `animation-delay: ${drawn.parts[1].delay.toFixed(2)}s`);
+    // the plate does not move: no style of its own
+    assert.equal(parts[0].attrs.style, undefined);
     assert.equal(parts[1].children[2].attrs.points, drawn.parts[1].faces[2].points);
     const wait = isoWait({ motif: "blocks", label: "Saving…" });
     assert.equal(wait.attrs.role, "status");
