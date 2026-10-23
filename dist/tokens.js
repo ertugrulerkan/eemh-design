@@ -28,6 +28,14 @@ export const light = {
   "--chart-3": "oklch(0.5 0.16 255)",
   "--chart-4": "oklch(0.52 0.11 70)",
   "--chart-5": "oklch(0.769 0.188 70.08)",
+  "--viz-1": "oklch(0.44 0.15 258)",
+  "--viz-2": "oklch(0.655 0.15 75)",
+  "--viz-3": "oklch(0.6 0.2 338)",
+  "--viz-4": "oklch(0.52 0.09 182)",
+  "--viz-5": "oklch(0.645 0.11 228)",
+  "--viz-6": "oklch(0.36 0.03 260)",
+  "--raised": "oklch(1 0 0)",
+  "--elevation-raised": "0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -14px rgb(0 0 0 / 0.16)",
   "--sidebar": "oklch(0.145 0 0)",
   "--sidebar-foreground": "oklch(0.985 0 0)",
   "--sidebar-primary": "oklch(0.205 0 0)",
@@ -90,6 +98,14 @@ export const dark = {
   "--chart-3": "oklch(0.64 0.12 240)",
   "--chart-4": "oklch(0.6 0.22 295)",
   "--chart-5": "oklch(0.645 0.246 16.439)",
+  "--viz-1": "oklch(0.62 0.15 258)",
+  "--viz-2": "oklch(0.84 0.14 75)",
+  "--viz-3": "oklch(0.74 0.17 338)",
+  "--viz-4": "oklch(0.68 0.1 182)",
+  "--viz-5": "oklch(0.82 0.1 228)",
+  "--viz-6": "oklch(0.57 0.03 260)",
+  "--raised": "oklch(0.235 0 0)",
+  "--elevation-raised": "inset 0 1px 0 rgb(255 255 255 / 0.05), 0 10px 28px -14px rgb(0 0 0 / 0.7)",
   "--sidebar": "oklch(0.145 0 0)",
   "--sidebar-foreground": "oklch(0.985 0 0)",
   "--sidebar-primary": "oklch(0.488 0.243 264.376)",
@@ -158,6 +174,14 @@ export const theme = {
   "--color-sidebar-ring": "var(--sidebar-ring)",
   "--color-brand": "var(--brand)",
   "--color-brand-ink": "var(--brand-ink)",
+  "--color-viz-1": "var(--viz-1)",
+  "--color-viz-2": "var(--viz-2)",
+  "--color-viz-3": "var(--viz-3)",
+  "--color-viz-4": "var(--viz-4)",
+  "--color-viz-5": "var(--viz-5)",
+  "--color-viz-6": "var(--viz-6)",
+  "--color-raised": "var(--raised)",
+  "--shadow-raised": "var(--elevation-raised)",
   "--animate-rainbow": "rainbow var(--speed, 2s) infinite linear",
   "--color-color-5": "var(--color-5)",
   "--color-color-4": "var(--color-4)",
@@ -182,7 +206,13 @@ export const scale = {
   "--size-field": "30px",
   "--radius-small": "7px",
   "--radius-large": "12px",
-  "--radius-full": "999px"
+  "--radius-full": "999px",
+  "--size-text-26": "26px",
+  "--size-text-40": "40px",
+  "--ease-standard": "cubic-bezier(0.16, 1, 0.3, 1)",
+  "--duration-quick": "120ms",
+  "--duration-enter": "180ms",
+  "--duration-reveal": "700ms"
 };
 
 export const derived = {
@@ -205,5 +235,6 @@ export const derived = {
   "--warning-ink": "color-mix(in oklab,var(--warning) 55%,var(--foreground) 45%)",
   "--success-weak": "color-mix(in oklab,var(--success) 22%,var(--popover) 78%)",
   "--success-ink": "color-mix(in oklab,var(--success) 55%,var(--foreground) 45%)",
-  "--brand-ink": "color-mix(in oklab,var(--brand) 55%,var(--foreground) 45%)"
+  "--brand-ink": "color-mix(in oklab,var(--brand) 55%,var(--foreground) 45%)",
+  "--glow-brand": "color-mix(in oklab, var(--brand) 18%, transparent)"
 };

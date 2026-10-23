@@ -8,5 +8,11 @@
   "--size-field": "30px",
   "--radius-small": "7px",
   "--radius-large": "12px",
-  "--radius-full": "999px"
+  "--radius-full": "999px",
+  "--size-text-26": "26px",
+  "--size-text-40": "40px",
+  "--ease-standard": "cubic-bezier(0.16, 1, 0.3, 1)",
+  "--duration-quick": "120ms",
+  "--duration-enter": "180ms",
+  "--duration-reveal": "700ms"
 }

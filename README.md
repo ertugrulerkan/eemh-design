@@ -35,6 +35,16 @@ all draw with. Each of those stays in its own repository and takes this package 
   `@theme` block, so an animation a consumer uses runs without the panel's own copy. In v0.2.2 `--popover-hover` mixes 88% + 12%
   (it was 80% + 12%, 92% opaque, its backdrop showing through) and the day `--sidebar-foreground` is the sidebar's light ink, as
   the day sidebar is drawn dark.
+- v0.7.0 (23.10.2026, the owner: "PANELİN TAMAMI GÖSTERİŞLİ OLACAK! TEK BİR TASARIM DİLİ OLACAK!"; the language is written in SOANE
+  `belgeler/tasarim-dili/TASARIM-DILI.md`): the tokens of the panel's one design language.
+  - `--viz-1`…`--viz-6`, the data colours every chart of every room draws its series with (`bg-viz-1`, `fill-[var(--viz-1)]`):
+    each keeps its hue by day and night (`--chart-1` is orange by day and blue by night), stands at 3 : 1 on the card, the page and
+    the raised panel (pairs.json `marks`), and every two stay apart for colour-blind eyes (test/contrast.test.mjs). A gain is
+    `--success`, a loss `--destructive`, the one figure a screen is about `--brand`.
+  - `--raised` and `--elevation-raised` (`bg-raised`, `shadow-raised`): a cockpit's panel, lifted off the room's ground (by night
+    the card is the ground's own tone, so a panel showed only its line).
+  - `--glow-brand`: the one light a screen's hero may wear. `--size-text-26` (a figure tile's number) and `--size-text-40` (a
+    cockpit's hero figure), the only sizes above 17. `--ease-standard` (beUI's own ease-out, the one the panel's motion components already move by), `--duration-quick` / `-enter` / `-reveal`: how things move.
 - `src/` (v0.3.0, 12e): the panel's button, which the panel (eemh-ronchamp) and Render (eemh-render) each kept a copy of, moved
   here so it has one owner, compiled to `dist/button/` with its types and exported as `eemh-design/button`:
   - `src/button/index.tsx`: `Button` and `STILL`. beUI's moving button sized to the measurement standard, a control 28 high with its

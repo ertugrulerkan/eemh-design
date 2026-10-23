@@ -92,3 +92,37 @@ test("every pair a consumer must not draw falls under 4.5 : 1 in a theme: the ga
   const passing = pairs.misuse.filter((p) => THEMES.every((theme) => contrast(p, theme) >= 4.5));
   assert.deepEqual(passing.map(([fg, bg, where]) => `${fg} on ${bg} (${where})`), []);
 });
+
+// The data colours (--viz-1…6, the design language of 23.10.2026: one chart grammar for every room) are one palette in both themes:
+// each keeps its hue by day and night (the old --chart-1 was orange by day and blue by night: two languages), and every two of them
+// stay apart for an eye without red or green cones (Machado et al. 2009, severity 1, in linear sRGB; the distance in OKLab), so a
+// series is never told from its neighbour by hue alone. Their 3 : 1 against the grounds is in pairs.json `marks`.
+const VIZ = [1, 2, 3, 4, 5, 6].map((n) => `--viz-${n}`);
+const CVD = {
+  deutan: [[0.367322, 0.860646, -0.227968], [0.280085, 0.672501, 0.047413], [-0.01182, 0.04294, 0.968881]],
+  protan: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],
+};
+const oklabOf = ([r, g, b]) => {
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b), m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  return [0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s, 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s];
+};
+test("each data colour keeps its hue by day and night", () => {
+  const turned = VIZ.filter((name) => {
+    const [, , day] = oklch(resolve(`var(${name})`, declarations("light"))), [, , night] = oklch(resolve(`var(${name})`, declarations("dark")));
+    return Math.abs(((day - night + 540) % 360) - 180) > 2;
+  });
+  assert.deepEqual(turned, []);
+});
+for (const theme of THEMES) {
+  test(`every two data colours stay apart for colour-blind eyes by ${theme === "light" ? "day" : "night"}`, () => {
+    const decl = declarations(theme);
+    const close = [];
+    for (const [kind, matrix] of Object.entries(CVD)) for (let i = 0; i < VIZ.length; i++) for (let j = i + 1; j < VIZ.length; j++) {
+      const [a, b] = [VIZ[i], VIZ[j]].map((name) => oklabOf(matrix.map((row) => Math.max(0, row.reduce((sum, k, at) => sum + k * resolve(`var(${name})`, decl)[at], 0)))));
+      const apart = Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+      if (apart < 0.04) close.push(`${VIZ[i]} ~ ${VIZ[j]} (${kind}): ${apart.toFixed(3)}`);
+    }
+    assert.deepEqual(close, []);
+  });
+}

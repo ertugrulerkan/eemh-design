@@ -18,5 +18,6 @@
   "--warning-ink": "color-mix(in oklab,var(--warning) 55%,var(--foreground) 45%)",
   "--success-weak": "color-mix(in oklab,var(--success) 22%,var(--popover) 78%)",
   "--success-ink": "color-mix(in oklab,var(--success) 55%,var(--foreground) 45%)",
-  "--brand-ink": "color-mix(in oklab,var(--brand) 55%,var(--foreground) 45%)"
+  "--brand-ink": "color-mix(in oklab,var(--brand) 55%,var(--foreground) 45%)",
+  "--glow-brand": "color-mix(in oklab, var(--brand) 18%, transparent)"
 }

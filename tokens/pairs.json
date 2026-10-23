@@ -79,6 +79,27 @@
     ["muted-foreground", "background", "Tuval's layer swatch ring: a colour of AutoCAD's own (yellow, cyan) kept as it is, its edge seen"],
     ["muted-foreground", "popover", "the layer swatch ring in the layer menu"],
     ["chart-3", "card", "Aldo and the plan colours: a chart mark, in both themes"],
-    ["chart-4", "card", "Aldo and the plan colours: a chart mark, in both themes"]
+    ["chart-4", "card", "Aldo and the plan colours: a chart mark, in both themes"],
+    ["viz-1", "card", "a chart mark on a card"],
+    ["viz-1", "background", "a chart mark on the page"],
+    ["viz-1", "raised", "a chart mark on a cockpit panel"],
+    ["viz-2", "card", "a chart mark on a card"],
+    ["viz-2", "background", "a chart mark on the page"],
+    ["viz-2", "raised", "a chart mark on a cockpit panel"],
+    ["viz-3", "card", "a chart mark on a card"],
+    ["viz-3", "background", "a chart mark on the page"],
+    ["viz-3", "raised", "a chart mark on a cockpit panel"],
+    ["viz-4", "card", "a chart mark on a card"],
+    ["viz-4", "background", "a chart mark on the page"],
+    ["viz-4", "raised", "a chart mark on a cockpit panel"],
+    ["viz-5", "card", "a chart mark on a card"],
+    ["viz-5", "background", "a chart mark on the page"],
+    ["viz-5", "raised", "a chart mark on a cockpit panel"],
+    ["viz-6", "card", "a chart mark on a card"],
+    ["viz-6", "background", "a chart mark on the page"],
+    ["viz-6", "raised", "a chart mark on a cockpit panel"],
+    ["brand", "raised", "the cockpit focus mark (peak, profit) on a panel"],
+    ["success", "raised", "a gain mark on a panel"],
+    ["destructive", "raised", "a loss mark on a panel"]
   ]
 }
