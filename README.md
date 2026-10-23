@@ -51,7 +51,8 @@ all draw with. Each of those stays in its own repository and takes this package 
     are synced as the panel syncs its own (ui-rules K2: fetch the item's JSON, compare `files[].content`), never edited. The
     consumers keep their own copies of the `lib` files, which their other registry components import by path.
 
-  It needs `react`, `motion`, `clsx` and `tailwind-merge` from the consumer (peer dependencies). Tailwind does not read
+  It needs `react`, `motion`, `clsx` and `tailwind-merge` from the consumer (peer dependencies, optional: a page drawn without
+  React, Mies, takes only `./iso/dom` and the stylesheets). Tailwind does not read
   `node_modules`, so a consumer names the package's code as a source in its stylesheet, or the button's classes are never
   written: `@source "<path to>/node_modules/eemh-design/dist/button";` (the folder holds the code alone, so
   the tokens' names in `dist/` do not count as used, and the compiled code carries no comments, whose words Tailwind would
