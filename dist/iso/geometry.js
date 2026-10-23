@@ -1,5 +1,5 @@
 export const ISO_MOTIFS = ["building", "tiles", "blocks", "drawers", "grid", "steps", "page", "flow", "sliders", "cloud", "stamp",
-    "parcel", "rooms", "sheets", "pen", "storeys", "light", "crowd", "ledger"];
+    "parcel", "rooms", "sheets", "pen", "storeys", "light", "crowd", "ledger", "talk"];
 const COS = Math.cos(Math.PI / 6);
 const SIN = Math.sin(Math.PI / 6);
 const flat = ([x, y, z]) => [(x - y) * COS, (x + y) * SIN - z];
@@ -20,6 +20,10 @@ const part = (motion, b, delay, comes) => ({ motion, faces: box(b), ...(delay !=
 const person = (x, y, z, size, delay, comes) => [
     part("slide", { x, y, z, w: size, d: size, h: size * 2 }, delay, comes),
     part("slide", { x: x + size * 0.2, y: y + size * 0.2, z: z + size * 2.15, w: size * 0.6, d: size * 0.6, h: size * 0.6 }, delay, comes)
+];
+const bubble = (x, z, w, answer, delay, comes) => [
+    part("slide", { x, y: 0.3, z, w, d: 0.75, h: 0.22, edge: answer }, delay, comes),
+    part("slide", { x: answer ? x + w - 0.35 : x + 0.1, y: 1.05, z, w: 0.25, d: 0.2, h: 0.22 }, delay, comes)
 ];
 function framed(parts) {
     let [x0, y0, x1, y1] = [Infinity, Infinity, -Infinity, -Infinity];
@@ -177,6 +181,12 @@ const DRAWINGS = {
         whole: () => [plate({ x: 0, y: 0, w: 2.5, d: 0.9, h: 0.04 }),
             ...[0.5, 0.85, 0.65, 1.25].map((h, k) => part("rise", { x: 0.15 + k * 0.58, y: 0.25, z: 0.04, w: 0.4, d: 0.4, h, edge: k === 3 }, at(k * 0.3)))],
         small: () => [0.6, 1.2].map((h, k) => part("rise", { x: k * 0.7, y: 0, w: 0.5, d: 0.5, h, edge: k === 1 }, at(k * 0.4))),
+    },
+    talk: {
+        whole: () => [plate({ x: 0, y: 0, w: 2.4, d: 1.5, h: 0.04 }),
+            ...bubble(0.1, 0.04, 1.3, false, at(0), from(-0.5, 0)), ...bubble(1.0, 0.4, 1.3, true, at(0.45), from(0.5, 0)),
+            ...bubble(0.1, 0.76, 0.9, false, at(0.9), from(-0.5, 0))],
+        small: () => [...bubble(0, 0, 1.1, false, at(0), from(-0.4, 0)), ...bubble(0.6, 0.36, 1.1, true, at(0.5), from(0.4, 0))],
     },
 };
 const drawn = new Map();

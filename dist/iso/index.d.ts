@@ -7,7 +7,7 @@ export declare function IsoScope({ motif, children }: {
     motif: IsoMotif;
     children?: ReactNode;
 }): import("react").JSX.Element;
-export declare const useIsoMotif: () => "blocks" | "building" | "cloud" | "crowd" | "drawers" | "flow" | "grid" | "ledger" | "light" | "page" | "parcel" | "pen" | "rooms" | "sheets" | "sliders" | "stamp" | "steps" | "storeys" | "tiles";
+export declare const useIsoMotif: () => "blocks" | "building" | "cloud" | "crowd" | "drawers" | "flow" | "grid" | "ledger" | "light" | "page" | "parcel" | "pen" | "rooms" | "sheets" | "sliders" | "stamp" | "steps" | "storeys" | "talk" | "tiles";
 export declare function IsoDrawingSvg({ small, className, idle }: {
     small?: boolean;
     className?: string;

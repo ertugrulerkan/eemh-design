@@ -1,4 +1,4 @@
-export declare const ISO_MOTIFS: readonly ["building", "tiles", "blocks", "drawers", "grid", "steps", "page", "flow", "sliders", "cloud", "stamp", "parcel", "rooms", "sheets", "pen", "storeys", "light", "crowd", "ledger"];
+export declare const ISO_MOTIFS: readonly ["building", "tiles", "blocks", "drawers", "grid", "steps", "page", "flow", "sliders", "cloud", "stamp", "parcel", "rooms", "sheets", "pen", "storeys", "light", "crowd", "ledger", "talk"];
 export type IsoMotif = (typeof ISO_MOTIFS)[number];
 export type IsoMotion = "plate" | "rise" | "slide" | "join" | "wave" | "step";
 export type IsoFace = {

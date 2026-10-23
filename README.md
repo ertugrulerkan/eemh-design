@@ -75,7 +75,8 @@ all draw with. Each of those stays in its own repository and takes this package 
     subject and in no other module: the product's building rising on its parcel, the overview's cards, projects' blocks, a plan
     chest's drawers, a table's grid, a process's steps, a template's page, a flow's piece passing, settings' slides, a connection's
     cloud, the administration's stamp, Nolli's parcels, Zaha's rooms, Blueprint's sheets, Tuval's pen line, Mies's storeys on their
-    columns, Render's light and shadow, Sullivan's people at a door, Aldo's money columns. Each whole, and small (a few of its parts)
+    columns, Render's light and shadow, Sullivan's people at a door, Aldo's money columns, Steilneset's word and its answer. Each
+    whole, and small (a few of its parts)
     for a line and a button; each part's faces at 30 degrees, its delay into the 2.4 s turn and where it comes from; the view box
     framed round them. `SOANE belgeler/iso-motifler-2026-10-23-siza.md` holds which room draws which.
   - `src/iso/index.tsx` (`eemh-design/iso`): `IsoScope` (where a module's screens begin: every drawing under it draws its `motif`;

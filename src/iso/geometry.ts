@@ -7,7 +7,7 @@
    where a line of text or a button does. */
 
 export const ISO_MOTIFS = ["building", "tiles", "blocks", "drawers", "grid", "steps", "page", "flow", "sliders", "cloud", "stamp",
-  "parcel", "rooms", "sheets", "pen", "storeys", "light", "crowd", "ledger"] as const;
+  "parcel", "rooms", "sheets", "pen", "storeys", "light", "crowd", "ledger", "talk"] as const;
 /** A module's subject, drawn: the product's own building rising on its parcel (the site, the app's first wait), and each room's. */
 export type IsoMotif = (typeof ISO_MOTIFS)[number];
 
@@ -55,6 +55,12 @@ const part = (motion: IsoMotion, b: Box, delay?: number, comes?: [number, number
 const person = (x: number, y: number, z: number, size: number, delay: number, comes: [number, number]): IsoPart[] => [
   part("slide", { x, y, z, w: size, d: size, h: size * 2 }, delay, comes),
   part("slide", { x: x + size * 0.2, y: y + size * 0.2, z: z + size * 2.15, w: size * 0.6, d: size * 0.6, h: size * 0.6 }, delay, comes)];
+
+/* A speech bubble (x its near corner along the line, z its height in the talk, `w` long): its body and the tail under the side it is
+   said from, coming in together; `answer`: the other side's, its tail at its far end and its top edged, the drawing's one edge. */
+const bubble = (x: number, z: number, w: number, answer: boolean, delay: number, comes: [number, number]): IsoPart[] => [
+  part("slide", { x, y: 0.3, z, w, d: 0.75, h: 0.22, edge: answer }, delay, comes),
+  part("slide", { x: answer ? x + w - 0.35 : x + 0.1, y: 1.05, z, w: 0.25, d: 0.2, h: 0.22 }, delay, comes)];
 
 /* The view box round every face, wherever a moving part comes from, with a margin of the drawing's own size. */
 function framed(parts: IsoPart[]): IsoDrawing {
@@ -238,6 +244,13 @@ const DRAWINGS: Record<IsoMotif, Pair> = {
     whole: () => [plate({ x: 0, y: 0, w: 2.5, d: 0.9, h: 0.04 }),
       ...[0.5, 0.85, 0.65, 1.25].map((h, k) => part("rise", { x: 0.15 + k * 0.58, y: 0.25, z: 0.04, w: 0.4, d: 0.4, h, edge: k === 3 }, at(k * 0.3)))],
     small: () => [0.6, 1.2].map((h, k) => part("rise", { x: k * 0.7, y: 0, w: 0.5, d: 0.5, h, edge: k === 1 }, at(k * 0.4))),
+  },
+  // Steilneset: a conversation, a word said and its answer coming in from the other side, the answer edged (ana 2322, 23.10.2026)
+  talk: {
+    whole: () => [plate({ x: 0, y: 0, w: 2.4, d: 1.5, h: 0.04 }),
+      ...bubble(0.1, 0.04, 1.3, false, at(0), from(-0.5, 0)), ...bubble(1.0, 0.4, 1.3, true, at(0.45), from(0.5, 0)),
+      ...bubble(0.1, 0.76, 0.9, false, at(0.9), from(-0.5, 0))],
+    small: () => [...bubble(0, 0, 1.1, false, at(0), from(-0.4, 0)), ...bubble(0.6, 0.36, 1.1, true, at(0.5), from(0.4, 0))],
   },
 };
 

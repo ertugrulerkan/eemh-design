@@ -44,6 +44,15 @@ test("no two modules draw the same: every motif's drawing, whole and small, is i
   for (const motif of ISO_MOTIFS) assert.ok(isoDrawing(motif, true).parts.length <= isoDrawing(motif).parts.length, motif);
 });
 
+test("Steilneset's conversation draws its own: a word said and its answer, the answer edged (ana 2322, 23.10.2026)", () => {
+  assert.ok(ISO_MOTIFS.includes("talk"));
+  for (const small of [false, true]) {
+    const { parts } = isoDrawing("talk", small);
+    assert.ok(parts.filter((part) => part.motion === "slide").length >= 2, `talk${small ? " (small)" : ""}`);
+    assert.ok(parts.some((part) => part.faces.some((face) => face.edge)));
+  }
+});
+
 test("a wait and an empty place draw the motif of the module they stand in, a line's and a button's its small form", () => {
   const polygons = (html) => html.match(/<polygon class="[^"]+" points="[^"]+"/g);
   const faces = (motif, small) => isoDrawing(motif, small).parts.flatMap((part) => part.faces.map((face) => face.points));
