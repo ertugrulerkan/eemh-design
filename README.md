@@ -61,14 +61,15 @@ all draw with. Each of those stays in its own repository and takes this package 
   Render and Mies:
   - `src/iso/geometry.ts`: the drawings as data, framework-free. Five motifs (a building rising on its parcel, a sheet's leaves, blocks
     coming together, a grid's wave, an escape route lit step by step) and the block a row or a button draws; each part's faces at 30
-    degrees, its delay into the 2.4 s turn and where it comes from. `stayFor()`: a wait unseen under 150 ms, and shown at least 400 ms.
+    degrees, its delay into the 2.4 s turn and where it comes from.
   - `src/iso/index.tsx` (`eemh-design/iso`): `IsoLoader` (sizes screen, section, card, fit, row, button; `label` said to a screen
     reader, `said` written, `quiet` inside a wait already said), `IsoFill` (a map's or canvas's whole box), `IsoEmpty` (the drawing
-    at rest over its one sentence, with a `title` and an `action`; `size="row"` in a line), `useWaitShown()`. The consumer wraps
+    at rest over its one sentence, with a `title` and an `action`; `size="row"` in a line). The consumer wraps
     `IsoLoader` with its own word for "Loading…".
   - `src/iso/dom.ts` (`eemh-design/iso/dom`): the same drawings for a page drawn without React (Mies): `isoSvg`, `isoWait`, `isoEmpty`.
   - `src/iso/iso.css` (`eemh-design/iso.css`): the faces in the theme's tones (`--foreground`, `--background`, `--border`, `--brand`,
-    each falling back to the text's own colour), only transform and opacity moving, nothing moving under reduced motion.
+    each falling back to the text's own colour), a wait unseen under 150 ms, only transform and opacity moving, nothing moving
+    under reduced motion.
   `Button` takes `loading`: pressed no more, said busy, the block where its icon stood. A consumer names `dist/iso` as a source
   beside `dist/button` (`@source "<path to>/node_modules/eemh-design/dist/iso";`) and imports `eemh-design/iso.css` once.
 - `src/vite/` (v0.4.0, 13b-P2b): the fix for motion-dom's keyboard press, which the button presses through, kept with it: the file

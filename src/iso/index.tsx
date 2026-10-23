@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { isoDrawing, isoFaceClass, isoPartStyle, stayFor, type IsoDrawn, type IsoMotif } from "./geometry.js";
+import type { CSSProperties, ReactNode } from "react";
+import { isoDrawing, isoFaceClass, isoPartStyle, type IsoDrawn, type IsoMotif } from "./geometry.js";
 
-export { APPEAR_MS, CYCLE, STAY_MS, isoDrawing, isoFaceClass, isoPartStyle, stayFor } from "./geometry.js";
+export { CYCLE, isoDrawing, isoFaceClass, isoPartStyle } from "./geometry.js";
 export type { IsoDrawing, IsoDrawn, IsoFace, IsoMotif, IsoMotion, IsoPart } from "./geometry.js";
 
 /* Every wait and every empty place, drawn isometric (the owner, 23.10.2026; ui-rules M1, M2): the drawing of ./geometry.ts as an SVG,
@@ -85,28 +85,4 @@ export function IsoEmpty({ motif = "grid", size = "section", title, children, ac
       {action ? <div className="mt-2 flex flex-wrap justify-center gap-2">{action}</div> : null}
     </div>
   );
-}
-
-/** Whether the wait for `busy` work is shown: while the work goes on, and as long as `stayFor` keeps it after. The drawing's own
- * fade-in (iso.css) keeps it out of sight under APPEAR_MS. */
-export function useWaitShown(busy: boolean): boolean {
-  const [shown, setShown] = useState(busy);
-  const began = useRef<number | null>(busy ? Date.now() : null);
-  useEffect(() => {
-    if (busy) {
-      began.current ??= Date.now();
-      setShown(true);
-      return;
-    }
-    const from = began.current;
-    began.current = null;
-    const left = from === null ? 0 : stayFor(from, Date.now());
-    if (!left) {
-      setShown(false);
-      return;
-    }
-    const timer = setTimeout(() => setShown(false), left);
-    return () => clearTimeout(timer);
-  }, [busy]);
-  return busy || shown;
 }

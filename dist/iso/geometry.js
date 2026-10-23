@@ -67,10 +67,3 @@ export function isoPartStyle(part) {
     return style;
 }
 export const isoFaceClass = (face) => (face.edge ? `iso-${face.side} iso-edge` : `iso-${face.side}`);
-export const APPEAR_MS = 150;
-export const STAY_MS = 400;
-export function stayFor(began, ended) {
-    if (ended - began < APPEAR_MS)
-        return 0;
-    return Math.max(0, began + APPEAR_MS + STAY_MS - ended);
-}

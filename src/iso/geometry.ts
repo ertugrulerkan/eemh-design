@@ -100,14 +100,3 @@ export function isoPartStyle(part: IsoPart): Record<string, string> {
 
 /** A face's classes (iso.css): its tone, and the brand's edge on the work's own piece. */
 export const isoFaceClass = (face: IsoFace) => (face.edge ? `iso-${face.side} iso-edge` : `iso-${face.side}`);
-
-/* When a wait shows: never under APPEAR_MS, so work that comes at once draws nothing (iso.css holds the drawing back that long);
-   once it has shown, at least STAY_MS, so it never blinks. */
-export const APPEAR_MS = 150;
-export const STAY_MS = 400;
-
-/** How much longer a wait that began at `began` and whose work ended at `ended` (ms) stays shown: none where it never appeared. */
-export function stayFor(began: number, ended: number): number {
-  if (ended - began < APPEAR_MS) return 0;
-  return Math.max(0, began + APPEAR_MS + STAY_MS - ended);
-}

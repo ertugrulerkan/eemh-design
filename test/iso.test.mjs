@@ -1,10 +1,10 @@
 // The isometric drawings every wait and empty place shows (./iso, ./iso/dom): one geometry, drawn by React and without it alike;
-// a wait said once and unseen when its work comes at once; an empty place at rest over its sentence; a button at work its block.
+// a wait said once; an empty place at rest over its sentence; a button at work its block.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createElement as h } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { APPEAR_MS, CYCLE, IsoEmpty, IsoLoader, STAY_MS, isoDrawing, stayFor } from "eemh-design/iso";
+import { CYCLE, IsoEmpty, IsoLoader, isoDrawing } from "eemh-design/iso";
 import { Button } from "eemh-design/button";
 
 const MOTIFS = ["building", "sheets", "blocks", "grid", "path", "block"];
@@ -26,11 +26,13 @@ test("every motif is a view box and its parts, each part three faces, already mo
   }
 });
 
-test("a wait that ends before it appears shows nothing; one that appeared stays its least time", () => {
-  assert.equal(stayFor(1000, 1000 + APPEAR_MS - 1), 0);
-  assert.equal(stayFor(0, 200), APPEAR_MS + STAY_MS - 200);
-  assert.equal(stayFor(0, APPEAR_MS), STAY_MS);
-  assert.equal(stayFor(0, APPEAR_MS + STAY_MS + 1), 0);
+test("a wait is unseen under 150 ms and nothing moves under reduced motion: iso.css holds it back and keeps every motion asked", async () => {
+  const { readFileSync } = await import("node:fs");
+  const css = readFileSync(new URL("../dist/iso.css", import.meta.url), "utf8");
+  const moving = css.slice(css.indexOf("@media (prefers-reduced-motion: no-preference)"), css.indexOf("@keyframes"));
+  assert.match(moving, /\.iso-wait \{ animation: iso-show [^;]* 0\.15s both; \}/);
+  // every animation the drawing runs is inside the no-preference block
+  assert.equal(css.split("animation:").length - 1, moving.split("animation:").length - 1);
 });
 
 test("a wait is said once: its label to a screen reader, its words where shown, nothing where one of several", () => {

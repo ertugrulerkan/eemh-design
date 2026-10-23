@@ -1,6 +1,6 @@
-import { type CSSProperties, type ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { type IsoDrawn, type IsoMotif } from "./geometry.js";
-export { APPEAR_MS, CYCLE, STAY_MS, isoDrawing, isoFaceClass, isoPartStyle, stayFor } from "./geometry.js";
+export { CYCLE, isoDrawing, isoFaceClass, isoPartStyle } from "./geometry.js";
 export type { IsoDrawing, IsoDrawn, IsoFace, IsoMotif, IsoMotion, IsoPart } from "./geometry.js";
 export type IsoSize = "screen" | "section" | "card" | "fit" | "row" | "button";
 export declare function IsoDrawingSvg({ motif, className, idle }: {
@@ -29,4 +29,3 @@ export declare function IsoEmpty({ motif, size, title, children, action, classNa
     action?: ReactNode;
     className?: string;
 }): import("react").JSX.Element;
-export declare function useWaitShown(busy: boolean): boolean;

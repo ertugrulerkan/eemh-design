@@ -1,7 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { useEffect, useRef, useState } from "react";
-import { isoDrawing, isoFaceClass, isoPartStyle, stayFor } from "./geometry.js";
-export { APPEAR_MS, CYCLE, STAY_MS, isoDrawing, isoFaceClass, isoPartStyle, stayFor } from "./geometry.js";
+import { isoDrawing, isoFaceClass, isoPartStyle } from "./geometry.js";
+export { CYCLE, isoDrawing, isoFaceClass, isoPartStyle } from "./geometry.js";
 const cn = (...names) => names.filter(Boolean).join(" ");
 const SIZES = {
     screen: { box: "flex min-h-full w-full flex-1 flex-col items-center justify-center gap-4 py-8", drawing: "h-28 w-40" },
@@ -27,25 +26,4 @@ export function IsoEmpty({ motif = "grid", size = "section", title, children, ac
     if (size === "row")
         return _jsxs("span", { className: cn(SIZES.row.box, className), children: [_jsx(IsoDrawingSvg, { motif: "block", className: SIZES.row.drawing, idle: true }), _jsx("span", { children: children })] });
     return (_jsxs("div", { className: cn(SIZES[size].box, "text-center", className), children: [_jsx(IsoDrawingSvg, { motif: motif, className: SIZES[size].drawing, idle: true }), title ? _jsx("p", { className: "text-[15px] font-medium text-foreground", children: title }) : null, children ? _jsx("p", { className: "max-w-md text-[13.5px] text-muted-foreground", children: children }) : null, action ? _jsx("div", { className: "mt-2 flex flex-wrap justify-center gap-2", children: action }) : null] }));
-}
-export function useWaitShown(busy) {
-    const [shown, setShown] = useState(busy);
-    const began = useRef(busy ? Date.now() : null);
-    useEffect(() => {
-        if (busy) {
-            began.current ??= Date.now();
-            setShown(true);
-            return;
-        }
-        const from = began.current;
-        began.current = null;
-        const left = from === null ? 0 : stayFor(from, Date.now());
-        if (!left) {
-            setShown(false);
-            return;
-        }
-        const timer = setTimeout(() => setShown(false), left);
-        return () => clearTimeout(timer);
-    }, [busy]);
-    return busy || shown;
 }
