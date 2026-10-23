@@ -1,7 +1,7 @@
 import { isoDrawing, isoFaceClass, isoPartStyle } from "./geometry.js";
 const SVG = "http://www.w3.org/2000/svg";
-export function isoSvg(motif, { height, idle = false }) {
-    const drawn = isoDrawing(motif);
+export function isoSvg(motif, { height, small = false, idle = false }) {
+    const drawn = isoDrawing(motif, small);
     const svg = document.createElementNS(SVG, "svg");
     svg.setAttribute("viewBox", drawn.view);
     svg.setAttribute("aria-hidden", "true");

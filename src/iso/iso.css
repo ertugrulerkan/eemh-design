@@ -17,7 +17,6 @@
   .iso-join { animation: iso-join 2.4s cubic-bezier(.45,0,.2,1) infinite both; }
   .iso-wave { animation: iso-wave 2.4s ease-in-out infinite both; }
   .iso-step { animation: iso-step 2.4s ease-in-out infinite both; }
-  .iso-bob { animation: iso-bob 1.2s ease-in-out infinite both; }
   /* an empty place at rest: the drawing whole, breathing slowly */
   .iso-idle .iso-float { animation: iso-float 4.8s ease-in-out infinite both; }
   .iso-idle .iso-float * { animation: none; }
@@ -29,7 +28,6 @@
 @keyframes iso-join { 0%, 100% { opacity: 0.55; transform: translate(var(--iso-dx), var(--iso-dy)); } 35%, 72% { opacity: 1; transform: none; } }
 @keyframes iso-wave { 0%, 56%, 100% { transform: none; } 28% { transform: translateY(-0.35px); } }
 @keyframes iso-step { 0%, 46%, 100% { opacity: 0.3; transform: none; } 18% { opacity: 1; transform: translateY(-0.12px); } }
-@keyframes iso-bob { 0%, 100% { transform: none; } 50% { transform: translateY(-0.16px); } }
 @keyframes iso-float { 0%, 100% { transform: none; } 50% { transform: translateY(-0.08px); } }
 
 /* a button at work (./button `loading`): its block stands where its icon was */

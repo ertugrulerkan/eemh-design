@@ -25,7 +25,7 @@ const DESTRUCTIVE = "border-destructive/40 text-destructive hover:bg-destructive
    (a tile, `size="tile"`, has it already). */
 export const STILL = { pressScale: 1, whileHover: { scale: 1 } } as const;
 
-/** `loading`: the work the button started still going (the owner, 23.10.2026: every wait isometric): one block where its icon stood
+/** `loading`: the work the button started still going (the owner, 23.10.2026: every wait isometric): its module's small drawing where its icon stood
  * (iso.css hides the icon), the button not pressed again meanwhile, said busy. */
 export type ButtonProps = Omit<BaseProps, "variant" | "size"> & { variant?: BaseProps["variant"] | "destructive"; size?: keyof typeof SIZED; loading?: boolean };
 

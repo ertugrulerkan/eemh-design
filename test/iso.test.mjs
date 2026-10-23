@@ -4,25 +4,59 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createElement as h } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { CYCLE, IsoEmpty, IsoLoader, isoDrawing } from "eemh-design/iso";
+import { CYCLE, ISO_MOTIFS, IsoEmpty, IsoLoader, IsoScope, isoDrawing } from "eemh-design/iso";
 import { Button } from "eemh-design/button";
 
-const MOTIFS = ["building", "sheets", "blocks", "grid", "path", "block"];
+// every motif, whole and in its small form (a line's, a button's)
+const DRAWINGS = ISO_MOTIFS.flatMap((motif) => [[motif, false], [motif, true]]);
 
 test("every motif is a view box and its parts, each part three faces, already moving as the drawing appears", () => {
-  for (const motif of MOTIFS) {
-    const { view, parts } = isoDrawing(motif);
-    assert.equal(view.split(" ").map(Number).filter(Number.isFinite).length, 4, motif);
-    assert.ok(parts.length > 0, motif);
+  for (const [motif, small] of DRAWINGS) {
+    const name = `${motif}${small ? " (small)" : ""}`;
+    const { view, parts } = isoDrawing(motif, small);
+    const box = view.split(" ").map(Number);
+    assert.equal(box.filter(Number.isFinite).length, 4, name);
+    assert.ok(box[2] > 0 && box[3] > 0, name);
+    assert.ok(parts.length > 0, name);
     for (const part of parts) {
-      assert.deepEqual(part.faces.map((face) => face.side), ["side-y", "side-x", "top"], motif);
-      for (const face of part.faces) assert.equal(face.points.split(" ").length, 4, motif);
+      assert.deepEqual(part.faces.map((face) => face.side), ["side-y", "side-x", "top"], name);
+      for (const face of part.faces) assert.equal(face.points.split(" ").length, 4, name);
       // a turn back at most: -CYCLE is the turn's start, as 0 is
-      if (part.delay !== undefined) assert.ok(part.delay <= 0 && part.delay >= -CYCLE, `${motif}: ${part.delay}`);
+      if (part.delay !== undefined) assert.ok(part.delay <= 0 && part.delay >= -CYCLE, `${name}: ${part.delay}`);
     }
     // the work's own piece is edged in the brand, once
-    assert.equal(parts.flatMap((part) => part.faces).filter((face) => face.edge).length, 1, motif);
-    assert.equal(isoDrawing(motif), isoDrawing(motif));
+    assert.equal(parts.flatMap((part) => part.faces).filter((face) => face.edge).length, 1, name);
+    // something in it moves: a drawing standing still is no wait
+    assert.ok(parts.some((part) => part.motion !== "plate"), name);
+    assert.equal(isoDrawing(motif, small), isoDrawing(motif, small));
+  }
+});
+
+test("no two modules draw the same: every motif's drawing, whole and small, is its own (the owner, 23.10.2026: 'hepsi farklı')", () => {
+  const seen = new Map();
+  for (const [motif, small] of DRAWINGS) {
+    const { parts } = isoDrawing(motif, small);
+    const drawn = JSON.stringify(parts.map((part) => [part.motion, part.faces.map((face) => face.points)]));
+    assert.equal(seen.get(drawn), undefined, `${motif}${small ? " (small)" : ""} draws ${seen.get(drawn)}'s drawing`);
+    seen.set(drawn, `${motif}${small ? " (small)" : ""}`);
+  }
+  // the small form is a few of the whole's kind, never more than the whole
+  for (const motif of ISO_MOTIFS) assert.ok(isoDrawing(motif, true).parts.length <= isoDrawing(motif).parts.length, motif);
+});
+
+test("a wait and an empty place draw the motif of the module they stand in, a line's and a button's its small form", () => {
+  const polygons = (html) => html.match(/<polygon class="[^"]+" points="[^"]+"/g);
+  const faces = (motif, small) => isoDrawing(motif, small).parts.flatMap((part) => part.faces.map((face) => face.points));
+  const pointsOf = (html) => polygons(html).map((one) => one.match(/points="([^"]+)"/)[1]);
+  // outside every module: the product's own building
+  assert.deepEqual(pointsOf(renderToStaticMarkup(h(IsoLoader, { label: "Loading…" }))), faces("building", false));
+  for (const motif of ["rooms", "ledger", "crowd"]) {
+    const within = (child) => renderToStaticMarkup(h(IsoScope, { motif }, child));
+    assert.deepEqual(pointsOf(within(h(IsoLoader, { label: "Loading…" }))), faces(motif, false), motif);
+    assert.deepEqual(pointsOf(within(h(IsoLoader, { size: "row", quiet: true }))), faces(motif, true), motif);
+    assert.deepEqual(pointsOf(within(h(IsoEmpty, { title: "Nothing yet" }))), faces(motif, false), motif);
+    assert.deepEqual(pointsOf(within(h(IsoEmpty, { size: "row" }, "Nothing yet."))), faces(motif, true), motif);
+    assert.deepEqual(pointsOf(within(h(Button, { loading: true }, "Save"))), faces(motif, true), motif);
   }
 });
 
@@ -46,12 +80,10 @@ test("a wait is said once: its label to a screen reader, its words where shown, 
   const quiet = renderToStaticMarkup(h(IsoLoader, { quiet: true, label: "Loading…" }));
   assert.doesNotMatch(quiet, /role=|sr-only/);
   assert.match(quiet, /aria-hidden="true"/);
-  // a row's and a button's wait is one block
-  assert.equal((renderToStaticMarkup(h(IsoLoader, { size: "row", motif: "grid", quiet: true })).match(/<polygon/g) ?? []).length, 3);
 });
 
-test("an empty place is the drawing at rest over its sentence, its title and its one way to fill it; in a line, one block", () => {
-  const empty = renderToStaticMarkup(h(IsoEmpty, { motif: "blocks", title: "No projects yet", action: h("button", null, "New project") }, "A project is a folder."));
+test("an empty place is the drawing at rest over its sentence, its title and its one way to fill it; in a line, its small form", () => {
+  const empty = renderToStaticMarkup(h(IsoScope, { motif: "blocks" }, h(IsoEmpty, { title: "No projects yet", action: h("button", null, "New project") }, "A project is a folder.")));
   assert.match(empty, /class="iso shrink-0 overflow-visible iso-idle /);
   assert.match(empty, /<p class="text-\[15px\] font-medium text-foreground">No projects yet<\/p><p [^>]*>A project is a folder\.<\/p><div [^>]*><button>New project<\/button><\/div>/);
   assert.doesNotMatch(empty, /role="status"/);
@@ -91,9 +123,11 @@ test("a page without React draws the same drawing: its parts, its classes and it
     // the plate does not move: no style of its own
     assert.equal(parts[0].attrs.style, undefined);
     assert.equal(parts[1].children[2].attrs.points, drawn.parts[1].faces[2].points);
-    const resting = isoSvg("block", { height: 16, idle: true });
+    const resting = isoSvg("storeys", { height: 16, small: true, idle: true });
     assert.equal(resting.attrs.class, "iso iso-idle");
+    assert.equal(resting.attrs.viewBox, isoDrawing("storeys", true).view);
     assert.equal(resting.children[0].attrs.class, "iso-float");
+    assert.equal(resting.children[0].children.length, isoDrawing("storeys", true).parts.length);
   } finally {
     delete globalThis.document;
   }

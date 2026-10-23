@@ -60,19 +60,25 @@ all draw with. Each of those stays in its own repository and takes this package 
 - `src/iso/` (23.10.2026, the owner: "tüm bekleme, loading ekranlarını izometrik animasyonlara çevir, sistem genelindeki hepsi" and
   "bekleme/boş ekranlarda da izometrik animasyon"): every wait and every empty place drawn isometric, with one owner for the panel,
   Render and Mies:
-  - `src/iso/geometry.ts`: the drawings as data, framework-free. Five motifs (a building rising on its parcel, a sheet's leaves, blocks
-    coming together, a grid's wave, an escape route lit step by step) and the block a row or a button draws; each part's faces at 30
-    degrees, its delay into the 2.4 s turn and where it comes from.
-  - `src/iso/index.tsx` (`eemh-design/iso`): `IsoLoader` (sizes screen, section, card, fit, row, button; `label` said to a screen
+  - `src/iso/geometry.ts`: the drawings as data, framework-free. v0.6.0 (the owner, 23.10.2026: "HER YERE BAŞKA BİR İZOMETRİK
+    animasyon yapılacak. konuyla modülle alakalı olarak hepsi farklı olacak"): nineteen motifs (`ISO_MOTIFS`), each a module's
+    subject and in no other module: the product's building rising on its parcel, the overview's cards, projects' blocks, a plan
+    chest's drawers, a table's grid, a process's steps, a template's page, a flow's piece passing, settings' slides, a connection's
+    cloud, the administration's stamp, Nolli's parcels, Zaha's rooms, Blueprint's sheets, Tuval's pen line, Mies's storeys on their
+    columns, Render's light and shadow, Sullivan's people at a door, Aldo's money columns. Each whole, and small (a few of its parts)
+    for a line and a button; each part's faces at 30 degrees, its delay into the 2.4 s turn and where it comes from; the view box
+    framed round them. `SOANE belgeler/iso-motifler-2026-10-23-siza.md` holds which room draws which.
+  - `src/iso/index.tsx` (`eemh-design/iso`): `IsoScope` (where a module's screens begin: every drawing under it draws its `motif`;
+    outside every scope the building), `IsoLoader` (sizes screen, section, card, fit, row, button; `label` said to a screen
     reader, `said` written, `quiet` inside a wait already said), `IsoFill` (a map's or canvas's whole box), `IsoEmpty` (the drawing
-    at rest over its one sentence, with a `title` and an `action`; `size="row"` in a line). The consumer wraps
-    `IsoLoader` with its own word for "Loading…".
-  - `src/iso/dom.ts` (`eemh-design/iso/dom`): the same drawing for a page drawn without React (Mies): `isoSvg`, set in the page's own
-    lines (`iso-line`).
+    at rest over its one sentence, with a `title` and an `action`; `size="row"` in a line). None of them takes a motif: a wait
+    draws its module's, never one named where it waits. The consumer wraps `IsoLoader` with its own word for "Loading…".
+  - `src/iso/dom.ts` (`eemh-design/iso/dom`): the same drawing for a page drawn without React (Mies): `isoSvg(motif, { height,
+    small, idle })`, set in the page's own lines (`iso-line`).
   - `src/iso/iso.css` (`eemh-design/iso.css`): the faces in the theme's tones (`--foreground`, `--background`, `--border`, `--brand`,
     each falling back to the text's own colour), a wait unseen under 150 ms, only transform and opacity moving, nothing moving
     under reduced motion.
-  `Button` takes `loading`: pressed no more, said busy, the block where its icon stood. A consumer names `dist/iso` as a source
+  `Button` takes `loading`: pressed no more, said busy, its module's small drawing where its icon stood. A consumer names `dist/iso` as a source
   beside `dist/button` (`@source "<path to>/node_modules/eemh-design/dist/iso";`) and imports `eemh-design/iso.css` once.
 - `src/vite/` (v0.4.0, 13b-P2b): the fix for motion-dom's keyboard press, which the button presses through, kept with it: the file
   `dist/es/gestures/press/utils/keyboard.mjs` (the same from 13.3.0 to 14.4.0) leaves the keyup and blur listeners of every Enter
