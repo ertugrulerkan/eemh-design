@@ -109,7 +109,9 @@ export function TimeLanes({ lanes, at, tick, words, locale, under }: {
   const seen: View = { steps: months, width, span, hover, top: AXIS + lanes.length * ROW, height: room.height };
 
   return (
-    <div className={cn("flex min-h-0 flex-col gap-2", under && "flex-1")}>
+    // its own width decides its names' column: a narrow lane (a studio's inspector, 20rem and less) gives its names less room so its
+    // bars keep theirs
+    <div className={cn("@container flex min-h-0 flex-col gap-2", under && "flex-1")}>
       <div className="flex min-h-7 items-center justify-between gap-3">
         {under?.legend ?? <span />}
         <span className="flex shrink-0 items-center gap-1">
@@ -118,7 +120,7 @@ export function TimeLanes({ lanes, at, tick, words, locale, under }: {
           <Button size="icon" variant="ghost" aria-label={words.zoomIn} disabled={zoom === ZOOMS.length - 1} onClick={() => zoomTo(zoom + 1)}><Plus /></Button>
         </span>
       </div>
-      <div className="grid min-h-0 flex-1 grid-cols-[minmax(7rem,9rem)_minmax(0,1fr)] gap-x-3"
+      <div className="grid min-h-0 flex-1 grid-cols-[minmax(4.5rem,9rem)_minmax(0,1fr)] gap-x-2 @min-[20rem]:grid-cols-[minmax(7rem,9rem)_minmax(0,1fr)] @min-[20rem]:gap-x-3"
         style={under ? undefined : { height: AXIS + lanes.length * ROW }}>
         {/* the rows' names, and what is drawn under them marked at its height */}
         <div className="relative flex min-h-0 flex-col">
