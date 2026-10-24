@@ -99,7 +99,7 @@ all draw with. Each of those stays in its own repository and takes this package 
 - `src/lanes/` (v0.8.0, 24.10.2026, ana's decision (a) on the design language's Render row: "İş kuyruğu `TimeLanes` ile"): the
   panel's trace waterfall (the owner's example, 22-23.10.2026), which the panel's cockpit held (`src/panel/cockpit/TimeLanes.tsx`
   and the lane half of `scale.ts`), moved here so the panel's Aldo cockpit and automation room and Render's queue draw one:
-  - `src/lanes/scale.ts`: the lane's arithmetic, framework-free (the zoom steps, an axis' round values, the steps its words are
+  - `src/lanes/scale.ts` (`eemh-design/lanes/scale`): the lane's arithmetic, framework-free (the zoom steps, an axis' round values, the steps its words are
     written at, the deepest a running total goes, the step under a point) and a run's clock: `timed` lays what ran on its run's own
     clock in the first of `STEPS_MS` that holds the whole in `RUN_STEPS` or fewer, `tickOf` writes a tick in that step's one unit
     and `secondsOf` how long something took (the automation room's steps and Render's cameras alike).

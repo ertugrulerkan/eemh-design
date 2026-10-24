@@ -7,8 +7,6 @@ import { EASE_OUT } from "../button/registry/lib/ease.js";
 import { cn } from "../button/registry/lib/utils.js";
 import { AT_ONE, everyTick, monthAt, ROUND_TICKS, ZOOMS } from "./scale.js";
 
-export { AT_ONE, everyTick, monthAt, MONTH_TICKS, ROUND_TICKS, RUN_STEPS, secondsOf, STEPS_MS, tickOf, ticks, timed, trough, ZOOMS } from "./scale.js";
-
 /* Time as the rooms draw it, the panel's trace waterfall (the owner's example, 22-23.10.2026: kobra.systems' trace waterfall): a row
    for each stretch of work, its bar from its first step for its steps with what it costs, brings or took beside it. One axis,
    drawn at half to four times its width (the buttons, Ctrl and the wheel), moved by a drag or the arrow keys, never a scroll bar; the
@@ -19,7 +17,7 @@ export { AT_ONE, everyTick, monthAt, MONTH_TICKS, ROUND_TICKS, RUN_STEPS, second
    steps, its key at the lanes' head, its values in the names' column, itself on the moving strip and its lines where the pointer
    reads a step. Without it the lanes stand as high as their rows.
    Moved from the panel's cockpit (src/panel/cockpit/TimeLanes.tsx) in v0.8.0 so the panel and Render draw one; the words come from
-   the room, in its language. */
+   the room, in its language. Its arithmetic, and a run's clock, is `eemh-design/lanes/scale`, framework-free. */
 export type Lane = { key: string; name: string; sub: string; start: number; length: number; amount: string; colour: string; label: string; detail: ReactNode };
 
 /* The words the lanes say themselves: the axis' name, what the strip is to a screen reader, and the two zoom buttons'. */

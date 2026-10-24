@@ -7,7 +7,6 @@ import { Button } from "../button/index.js";
 import { EASE_OUT } from "../button/registry/lib/ease.js";
 import { cn } from "../button/registry/lib/utils.js";
 import { AT_ONE, everyTick, monthAt, ROUND_TICKS, ZOOMS } from "./scale.js";
-export { AT_ONE, everyTick, monthAt, MONTH_TICKS, ROUND_TICKS, RUN_STEPS, secondsOf, STEPS_MS, tickOf, ticks, timed, trough, ZOOMS } from "./scale.js";
 const ROW = 28;
 const AXIS = 24;
 export function TimeLanes({ lanes, at, tick, words, locale, under }) {

@@ -4,7 +4,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createElement as h } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { everyTick, monthAt, ROUND_TICKS, RUN_STEPS, secondsOf, STEPS_MS, tickOf, ticks, timed, TimeLanes, trough } from "eemh-design/lanes";
+import { TimeLanes } from "eemh-design/lanes";
+import { everyTick, monthAt, ROUND_TICKS, RUN_STEPS, secondsOf, STEPS_MS, tickOf, ticks, timed, trough } from "eemh-design/lanes/scale";
 import { flowUnder } from "eemh-design/lanes/flow";
 
 test("the deepest a running total goes is the month the money needed peaks; none when it never goes under nought", () => {

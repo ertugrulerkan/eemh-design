@@ -38,6 +38,10 @@
       "types": "./dist/lanes/flow.d.ts",
       "default": "./dist/lanes/flow.js"
     },
+    "./lanes/scale": {
+      "types": "./dist/lanes/scale.d.ts",
+      "default": "./dist/lanes/scale.js"
+    },
     "./vite": {
       "types": "./dist/vite/index.d.ts",
       "default": "./dist/vite/index.js"

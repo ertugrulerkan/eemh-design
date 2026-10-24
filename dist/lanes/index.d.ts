@@ -1,5 +1,4 @@
 import { type ReactNode } from "react";
-export { AT_ONE, everyTick, monthAt, MONTH_TICKS, ROUND_TICKS, RUN_STEPS, secondsOf, STEPS_MS, tickOf, ticks, timed, trough, ZOOMS } from "./scale.js";
 export type Lane = {
     key: string;
     name: string;
