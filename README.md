@@ -38,7 +38,7 @@ all draw with. Each of those stays in its own repository and takes this package 
 - v0.7.0 (23.10.2026, the owner: "PANELİN TAMAMI GÖSTERİŞLİ OLACAK! TEK BİR TASARIM DİLİ OLACAK!"; the language is written in SOANE
   `belgeler/tasarim-dili/TASARIM-DILI.md`): the tokens of the panel's one design language.
   - `--viz-1`…`--viz-6`, the data colours every chart of every room draws its series with (`bg-viz-1`, `fill-[var(--viz-1)]`):
-    each keeps its hue by day and night (`--chart-1` is orange by day and blue by night), stands at 3 : 1 on the card, the page and
+    each keeps its hue by day and night (the old `--chart-1` was orange by day and blue by night), stands at 3 : 1 on the card, the page and
     the raised panel (pairs.json `marks`), and every two stay apart for colour-blind eyes (test/contrast.test.mjs). A gain is
     `--success`, a loss `--destructive`, the one figure a screen is about `--brand`.
   - `--raised` and `--elevation-raised` (`bg-raised`, `shadow-raised`): a cockpit's panel, lifted off the room's ground (by night
@@ -96,6 +96,10 @@ all draw with. Each of those stays in its own repository and takes this package 
   `pick`, `orbit` handed back), `cubeLook` (its look from the tokens, the design's own where a host defines none), `cssColor`
   (a token expression as three.js reads it) and `isDark`. It stands in three.js's frame (+Y up, front +Z); a host whose model does
   not turns what it hands it and what it is handed (Mies: +Z up, front -Y).
+- v0.9.0 (24.10.2026, TASARIM-DILI §8 "`--chart-1…5` emekliliği"): the old chart colours `--chart-1`…`--chart-5` are gone from
+  `tokens/color.json` (both themes) and their two marks from `pairs.json`. Every room had moved to `--viz-1…6` (step 2 of the design
+  language); on 24.10 no consumer named them (`git grep` over eemh-ronchamp, -render, -tuval, -mies, -blueprint, -steilneset, -aldo
+  and -sullivan), and the panel's ui-lint keeps refusing them (C5).
 - `src/lanes/` (v0.8.0, 24.10.2026, ana's decision (a) on the design language's Render row: "İş kuyruğu `TimeLanes` ile"): the
   panel's trace waterfall (the owner's example, 22-23.10.2026), which the panel's cockpit held (`src/panel/cockpit/TimeLanes.tsx`
   and the lane half of `scale.ts`), moved here so the panel's Aldo cockpit and automation room and Render's queue draw one:
