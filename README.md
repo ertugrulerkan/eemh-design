@@ -96,6 +96,26 @@ all draw with. Each of those stays in its own repository and takes this package 
   `pick`, `orbit` handed back), `cubeLook` (its look from the tokens, the design's own where a host defines none), `cssColor`
   (a token expression as three.js reads it) and `isDark`. It stands in three.js's frame (+Y up, front +Z); a host whose model does
   not turns what it hands it and what it is handed (Mies: +Z up, front -Y).
+- `src/lanes/` (v0.8.0, 24.10.2026, ana's decision (a) on the design language's Render row: "İş kuyruğu `TimeLanes` ile"): the
+  panel's trace waterfall (the owner's example, 22-23.10.2026), which the panel's cockpit held (`src/panel/cockpit/TimeLanes.tsx`
+  and the lane half of `scale.ts`), moved here so the panel's Aldo cockpit and automation room and Render's queue draw one:
+  - `src/lanes/scale.ts`: the lane's arithmetic, framework-free (the zoom steps, an axis' round values, the steps its words are
+    written at, the deepest a running total goes, the step under a point) and a run's clock: `timed` lays what ran on its run's own
+    clock in the first of `STEPS_MS` that holds the whole in `RUN_STEPS` or fewer, `tickOf` writes a tick in that step's one unit
+    and `secondsOf` how long something took (the automation room's steps and Render's cameras alike).
+  - `src/lanes/index.tsx` (`eemh-design/lanes`): `TimeLanes`, a row for each stretch, its bar where it began for as long as it
+    took with its figure beside it, a bar opening its card, one axis zoomed and moved by buttons, Ctrl and the wheel, a drag or the
+    keys. The room gives its words (`words`: the axis' name, the strip's, the zoom buttons'; `locale` for the zoom figure) and
+    what it draws under the lanes on the same axis (`under`: its steps, its key, its marks in the names' column, itself, and its
+    lines in the pointer's readout).
+  - `src/lanes/flow.tsx` (`eemh-design/lanes/flow`): `flowUnder`, the Aldo cockpit's money under the lanes (each month's in and
+    out, the running total, its deepest point's ring breathing out three times, `--animate-peak`, the panel's `.cockpit-peak`
+    until v0.8.0). Apart from the lanes, so a lane drawn without money carries no chart library: `recharts` is needed by this
+    file alone.
+
+  It needs `react`, `motion`, `lucide-react` and `radix-ui` from the consumer, and `recharts` for `./lanes/flow` (peer
+  dependencies, optional). A consumer names `dist/lanes` as a source beside `dist/button`
+  (`@source "<path to>/node_modules/eemh-design/dist/lanes";`).
 - `src/vite/` (v0.4.0, 13b-P2b): the fix for motion-dom's keyboard press, which the button presses through, kept with it: the file
   `dist/es/gestures/press/utils/keyboard.mjs` (the same from 13.3.0 to 14.4.0) leaves the keyup and blur listeners of every Enter
   press on the element, so the next blur, long after the press ended, fires a pointercancel that cancels a mouse press under way

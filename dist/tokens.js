@@ -193,7 +193,8 @@ export const theme = {
   "--animate-marquee-vertical": "marquee-vertical 30s linear infinite",
   "--animate-shimmer-slide": "shimmer-slide var(--speed) ease-in-out infinite alternate",
   "--animate-spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
-  "--animate-aurora": "aurora 8s ease-in-out infinite alternate"
+  "--animate-aurora": "aurora 8s ease-in-out infinite alternate",
+  "--animate-peak": "peak 1.6s var(--ease-standard) 1s 3"
 };
 
 export const scale = {

@@ -1,6 +1,6 @@
 {
   "name": "eemh-design",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "files": [
@@ -30,6 +30,14 @@
       "types": "./dist/view-cube/index.d.ts",
       "default": "./dist/view-cube/index.js"
     },
+    "./lanes": {
+      "types": "./dist/lanes/index.d.ts",
+      "default": "./dist/lanes/index.js"
+    },
+    "./lanes/flow": {
+      "types": "./dist/lanes/flow.d.ts",
+      "default": "./dist/lanes/flow.js"
+    },
     "./vite": {
       "types": "./dist/vite/index.d.ts",
       "default": "./dist/vite/index.js"
@@ -41,8 +49,11 @@
   },
   "peerDependencies": {
     "clsx": "^2.1.1",
+    "lucide-react": "^1.47.0",
     "motion": "^13.4.0",
+    "radix-ui": "^1.6.7",
     "react": "^19.3.0",
+    "recharts": "^3.8.0",
     "tailwind-merge": "^3.7.0",
     "three": "^0.186.0"
   },
@@ -50,10 +61,19 @@
     "clsx": {
       "optional": true
     },
+    "lucide-react": {
+      "optional": true
+    },
     "motion": {
       "optional": true
     },
+    "radix-ui": {
+      "optional": true
+    },
     "react": {
+      "optional": true
+    },
+    "recharts": {
       "optional": true
     },
     "tailwind-merge": {
@@ -68,9 +88,12 @@
     "@types/react": "19.3.0",
     "@types/three": "0.186.0",
     "clsx": "2.1.1",
+    "lucide-react": "1.49.0",
     "motion": "13.4.0",
+    "radix-ui": "1.6.7",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "recharts": "3.8.0",
     "tailwind-merge": "3.7.0",
     "three": "0.186.1",
     "typescript": "7.0.2"
