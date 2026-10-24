@@ -108,7 +108,8 @@ all draw with. Each of those stays in its own repository and takes this package 
     keys. The room gives its words (`words`: the axis' name, the strip's, the zoom buttons'; `locale` for the zoom figure) and
     what it draws under the lanes on the same axis (`under`: its steps, its key, its marks in the names' column, itself, and its
     lines in the pointer's readout). v0.8.1: its own width decides its names' column (a container query): 20rem and narrower (a
-    studio's inspector on a phone), the names take 4.5rem at least instead of 7, so the bars keep their room.
+    studio's inspector on a phone), the names take 5rem instead of 7 to 9 (a `minmax` track grows to its most before a fraction gets any), so the bars keep their
+    room.
   - `src/lanes/flow.tsx` (`eemh-design/lanes/flow`): `flowUnder`, the Aldo cockpit's money under the lanes (each month's in and
     out, the running total, its deepest point's ring breathing out three times, `--animate-peak`, the panel's `.cockpit-peak`
     until v0.8.0). Apart from the lanes, so a lane drawn without money carries no chart library: `recharts` is needed by this
