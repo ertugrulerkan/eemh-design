@@ -16,14 +16,14 @@ export type FlowWords = { net: string; total: string; in: string; out: string; p
 
 const TOP = 10, BOTTOM = 6;
 
-/* Where the money stands on the strip: its round values, their ends, the height of each, its deepest point. */
+/* Where the money stands on the strip: its round values, their ends, the height of each, the plot's height, its deepest point. */
 function placing(flow: Flow, view: View) {
   const low = Math.min(0, ...flow.net, ...flow.total), high = Math.max(0, ...flow.net, ...flow.total);
   const scale = ticks(low, high, 3);
   const [lo, hi] = [scale[0], scale[scale.length - 1]];
   const plot = Math.max(view.height - view.top - TOP - BOTTOM, 1);
   const yOf = (v: number) => view.top + TOP + ((hi - v) / (hi - lo || 1)) * plot;
-  return { scale, lo, hi, yOf, deepest: trough(flow.total) };
+  return { scale, lo, hi, yOf, plot, deepest: trough(flow.total) };
 }
 
 export function flowUnder(flow: Flow, words: FlowWords): Under {
@@ -55,9 +55,11 @@ export function flowUnder(flow: Flow, words: FlowWords): Under {
 function Money({ flow, words, view }: { flow: Flow; words: FlowWords; view: View }) {
   const reduce = useReducedMotion();
   const id = `flow-${useId().replace(/:/g, "")}`;
-  const { scale, lo, hi, yOf, deepest } = placing(flow, view);
+  const { scale, lo, hi, yOf, plot, deepest } = placing(flow, view);
   const data = flow.net.map((one, m) => ({ x: m + 0.5, net: one, total: flow.total[m] ?? 0 }));
-  // the total above nought in the gain's colour, under it in the loss's: the gradient turns where the line crosses nought
+  // the total above nought in the gain's colour, under it in the loss's: the gradient spans the plot, the axis' top to its foot as
+  // the chart lays them, so it turns where nought stands (on the area's own box, the default, it turned wherever the total's own
+  // ends put it: a total never under nought drew its lowest third in the loss's colour)
   const turn = hi === lo ? 0 : hi / (hi - lo);
   const peak = deepest ? words.peak(flow.short(deepest.value), deepest.at) : "";
   const { width, span, hover } = view;
@@ -69,7 +71,7 @@ function Money({ flow, words, view }: { flow: Flow; words: FlowWords; view: View
           <ResponsiveContainer initialDimension={{ width: 320, height: 200 }}>
             <ComposedChart data={data} margin={{ top: TOP, right: 0, bottom: BOTTOM, left: 0 }} accessibilityLayer={false}>
               <defs>
-                <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+                <linearGradient id={id} gradientUnits="userSpaceOnUse" x1="0" y1={TOP} x2="0" y2={TOP + plot}>
                   <stop offset="0" stopColor="var(--success)" stopOpacity={0.32} />
                   <stop offset={turn} stopColor="var(--success)" stopOpacity={0.04} />
                   <stop offset={turn} stopColor="var(--destructive)" stopOpacity={0.06} />

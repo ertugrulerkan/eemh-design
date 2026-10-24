@@ -56,6 +56,10 @@ test("a run's clock keeps any run within a few dozen ticks and writes every tick
   assert.equal(tickOf(2, 3_600_000, "en"), "2h");
   assert.equal(secondsOf(840, "en"), "0.84s");
   assert.equal(secondsOf(42_000, "en"), "42s");
+  // a time that rounds to ten is written as ten is, not with the two decimals under it
+  assert.equal(secondsOf(9_994, "en"), "9.99s");
+  assert.equal(secondsOf(9_996, "en"), "10s");
+  assert.equal(secondsOf(9_995, "tr-TR"), "10sn");
   assert.equal(secondsOf(Number.NaN, "en"), "");
 });
 

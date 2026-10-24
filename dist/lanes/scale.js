@@ -37,8 +37,10 @@ export function timed(items, span, begun) {
 }
 export function secondsOf(ms, locale) {
     const took = ms / 1000;
-    const digits = took < 10 ? 2 : 0;
-    return Number.isFinite(took) ? took.toLocaleString(locale, { style: "unit", unit: "second", unitDisplay: "narrow", minimumFractionDigits: digits, maximumFractionDigits: digits }) : "";
+    if (!Number.isFinite(took))
+        return "";
+    const digits = Math.abs(Number(took.toLocaleString("en", { maximumFractionDigits: 2, useGrouping: false }))) < 10 ? 2 : 0;
+    return took.toLocaleString(locale, { style: "unit", unit: "second", unitDisplay: "narrow", minimumFractionDigits: digits, maximumFractionDigits: digits });
 }
 export function tickOf(step, unit, locale) {
     const ms = step * unit;

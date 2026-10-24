@@ -59,11 +59,13 @@ export function timed<T>(items: readonly T[], span: (item: T) => { from: number;
   return { unit, steps: Math.max(1, Math.ceil(whole / unit)), whole, timed };
 }
 
-/* How long something took, in seconds as the rooms write them (two decimals under ten); none where it is not known. */
+/* How long something took, in seconds as the rooms write them (two decimals under ten, as rounded: 9.996 s is ten and written as
+   ten is); none where it is not known. */
 export function secondsOf(ms: number, locale: string): string {
   const took = ms / 1000;
-  const digits = took < 10 ? 2 : 0;
-  return Number.isFinite(took) ? took.toLocaleString(locale, { style: "unit", unit: "second", unitDisplay: "narrow", minimumFractionDigits: digits, maximumFractionDigits: digits }) : "";
+  if (!Number.isFinite(took)) return "";
+  const digits = Math.abs(Number(took.toLocaleString("en", { maximumFractionDigits: 2, useGrouping: false }))) < 10 ? 2 : 0;
+  return took.toLocaleString(locale, { style: "unit", unit: "second", unitDisplay: "narrow", minimumFractionDigits: digits, maximumFractionDigits: digits });
 }
 
 /* A tick of a run's clock in words: its time from the run's start, every tick in the one unit (s, min, h) its step is counted in. */
