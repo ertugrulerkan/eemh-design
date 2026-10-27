@@ -226,6 +226,9 @@ export class ViewCube {
     this.patch.dispose();
     this.litMaterial.dispose();
     this.renderer.dispose();
+    // its WebGL context at once: disposed alone it stays until a collection, and past the browser's few live contexts the oldest is
+    // lost, a long-lived view among them (vps-bulut, Mies 28.10.2026)
+    this.renderer.forceContextLoss();
   }
 
   /** The zone under a pointer, or null off the cube. */

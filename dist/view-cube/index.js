@@ -168,6 +168,7 @@ export class ViewCube {
         this.patch.dispose();
         this.litMaterial.dispose();
         this.renderer.dispose();
+        this.renderer.forceContextLoss();
     }
     zoneAt(e) {
         const r = this.canvas.getBoundingClientRect();

@@ -38,3 +38,15 @@ test("the cube's look falls back to the design's own tokens, day and night, wher
   assert.ok(look.edge.startsWith("var(--border-strong, color-mix(in oklch, var(--border, oklch(0.922 0 0)) 45%"));
   assert.ok(seen.every((css) => css.includes("var(--")));
 });
+
+test("red: a cube let go gives its renderer's WebGL context up at once, never waiting for a collection (vps-bulut 28.10.2026)", async () => {
+  // a renderer only disposed keeps its context until a collection, and past the browser's few live ones the oldest view goes dark
+  const { ViewCube } = await import("../dist/view-cube/index.js");
+  globalThis.window ??= { devicePixelRatio: 1 };
+  const calls = [];
+  const renderer = { domElement: { style: {}, remove() {}, addEventListener() {}, removeEventListener() {} }, setPixelRatio() {},
+    setClearColor() {}, render() {},
+    dispose: () => calls.push("dispose"), forceContextLoss: () => calls.push("context lost") };
+  new ViewCube({}, () => renderer).dispose();
+  assert.deepEqual(calls, ["dispose", "context lost"]);
+});
